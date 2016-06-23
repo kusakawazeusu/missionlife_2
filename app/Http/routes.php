@@ -12,5 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
+
+Route::get('/about', function () {
+    return 'Hello';
+});
+
+Route::get('/about/{id}',['as' => 'about.id', function ($id) {
+    return 'Hello'.$id;
+}]);
