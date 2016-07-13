@@ -17,12 +17,13 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('active_key');
-            $table->boolean('activation');
-            $table->integer('point');
-            $table->boolean('gender');
+            $table->string('active_key')->default(rand(1000000,9999999));
+            $table->boolean('activation')->default(false);
+            $table->integer('point')->default(0);
+            $table->boolean('gender')->default(false);
             $table->integer('department_id');
-            $table->integer('fame');
+            $table->integer('fame')->default(10);
+            $table->integer('auth')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

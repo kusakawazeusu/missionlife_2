@@ -16,22 +16,58 @@
 //    $message->to('foo@example.com');
 //});
 
-Route::get('/', function () {
-    return view('index');
+Route::get('/quest', function () {
+    return view('quest');
 });
+
+Route::get('/newquest', function () {
+    return view('newquest');
+});
+
+Route::get('/account', function () {
+    return view('account');
+});
+
+Route::get('/work', function () {
+    $quests = DB::table('quest')->where('catalog','0')->get();
+    return view('work',['quests' => $quests]);
+});
+
+Route::get('/activity', function () {
+    $quests = DB::table('quest')->where('catalog','1')->get();
+    return view('activity',['quests' => $quests]);
+});
+
+Route::get('/conf', function () {
+    $quests = DB::table('quest')->where('catalog','2')->get();
+    return view('conf',['quests' => $quests]);
+});
+
+Route::get('/', function () {
+    $dialogs = DB::table('dialog')->where('ocassion','first_time')->get();
+
+    return view('index',['dialogs' => $dialogs]);
+});
+
+Route::post('/active_check','mission@user_active');
 
 Route::get('/active', function () {
 	$users = DB::table('users')->get();
     return view('layouts.partials.active',['users' => $users]);
 });
 
-Route::get('/active/{key}',['as' => 'active.key', function ($key) {
-    return view('layouts.partials.activeform');
-}]);
+
+Route::get('/active/{key}',function ($key) {
+	if(Auth::user()->active_key == $key)
+	{
+		DB::table('users')->where('active_key',$key)->update(['activation'=>true]);
+    }
+    return view('layouts.partials.activeform',['key'=>$key]);
+});
 
 
-Route::get('/test', function () {
-    return view('welcome');
+Route::get('/newdia', function () {
+    return view('newdialog');
 });
 
 Route::get('/about/{id}',['as' => 'about.id', function ($id) {
