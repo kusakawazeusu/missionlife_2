@@ -48,11 +48,21 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
+        $messages = [
+            'regex' => '請使用臺灣科技大學學生信箱(mail.ntust.edu.tw)註冊。',
+            'required' => '這個欄位是必填的！',
+            'email' => '請輸入Email格式',
+            'max' => '這個欄位最多只能輸入255個字元。',
+            'unique' => '這個Email已經被註冊過了！',
+            'min' => '密碼需要至少6個字元',
+        ];
+
+
         return Validator::make($data, [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'email' => ['required','email','max:255','unique:users','regex:/.*@mail\.ntust\.edu\.tw/'],
             'password' => 'required|min:6|confirmed',
-        ]);
+        ],$messages);
     }
 
     /**
@@ -63,10 +73,19 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        $k = rand(1000000,9999999);
+        
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'activation' => 'false',
+            'point' => '0',
+            'gender' => '0',
+            'department_id' => '0',
+            'fame' => '0',
+
         ]);
     }
 }

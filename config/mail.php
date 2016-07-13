@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'MissionLife@gmail.com', 'name' => 'Mission Life 冒險者公會'],
 
     /*
     |--------------------------------------------------------------------------
