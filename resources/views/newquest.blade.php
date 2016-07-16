@@ -13,6 +13,16 @@
 					<div class="panel-body">
 						<h2 class="text-center">發佈新任務</h2>
             	        <form class="form-horizontal" role="form" method="POST" action="{{ url('/newquest') }}">
+            	        	<div class="form-group">
+             	               <label for="catalog" class="col-md-2 col-md-offset-2 control-label">任務分類</label>
+             	               <div class="col-md-6">
+            	        			<select id="catalog" class="form-control">
+										<option>工讀</option>
+										<option>活動</option>
+										<option>講座</option>
+									</select>
+								</div>
+							</div>
             	            <div class="form-group">
              	               <label for="title" class="col-md-2 col-md-offset-2 control-label">任務標題</label>
              	               <div class="col-md-6">
@@ -44,6 +54,20 @@
              	           		</div>
              	           		<label for="salary" class="control-label">元</label>
              	          	</div>
+            	            <div class="form-group">
+             	               	<label for="workforce" class="col-md-2 col-md-offset-2 control-label">需要人數</label>
+             	               	<div class="col-md-2">
+             	               		<input id="workforce" class="form-control" name="workforce">
+             	           		</div>
+             	           		<label for="workforce" class="control-label">人</label>
+             	          	</div>
+            	            <div class="form-group">
+             	               	<label for="requirement" class="col-md-2 col-md-offset-2 control-label">任務條件</label>
+             	               	<div class="col-md-2">
+             	               		<input id="requirement" class="form-control" name="requirement">
+             	           		</div>
+             	          	</div>
+
                         	<div class="form-group">
                         	    <div class="col-md-6 col-md-offset-4">
                         	        <button type="submit" class="btn btn-primary">

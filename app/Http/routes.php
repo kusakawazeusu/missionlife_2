@@ -16,6 +16,11 @@
 //    $message->to('foo@example.com');
 //});
 
+Route::get('/diamanage','dialog_ctrler@showDia');
+
+Route::get('/diamanage/{$ocassion}','dialog_ctrler@manageDia');
+
+
 Route::get('/quest', function () {
     return view('quest');
 });
@@ -65,10 +70,9 @@ Route::get('/active/{key}',function ($key) {
     return view('layouts.partials.activeform',['key'=>$key]);
 });
 
+Route::post('/newdia','mission@store')->name('newdia');
+Route::get('/newdia','mission@create');
 
-Route::get('/newdia', function () {
-    return view('newdialog');
-});
 
 Route::get('/about/{id}',['as' => 'about.id', function ($id) {
     return 'Hello'.$id;

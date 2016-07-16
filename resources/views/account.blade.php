@@ -43,7 +43,7 @@
 				<div class="tab-content">
 					<div id="home" class="tab-pane fade in active">
 						<h3>個人資料</h3>
-						wewewqeweq
+						
 					</div>
 					<div id="m1" class="tab-pane fade">
 						<h3>成就列表</h3>

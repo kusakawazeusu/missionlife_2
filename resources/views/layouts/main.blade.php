@@ -75,13 +75,45 @@
                         <a href="{{ url('/pastquest') }}">歷史資料</a>
                     </li>
                 </ul>
+                @elseif(Auth::Guest() == false && Auth::user()->auth == '2')
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <a href="{{ url('/newdia') }}">新增對話</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/diamanage') }}">管理對話</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/usermanage') }}">使用者</a>
+                    </li>
+                </ul> 
                 @endif
                 <ul class="nav navbar-nav navbar-right">
                     @if(Auth::Guest())
                     <li>
+                        <a>訪客</a>
+                    </li>
+                    <li>
                         <a href="{{ url('/login') }}">Login</a>
                     </li>
-                    @else
+                    @elseif(Auth::user()->auth=='0')
+                    <li>
+                        <a>使用者</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/logout') }}">Logout</a>
+                    </li>
+                    @elseif(Auth::user()->auth=='1')
+                    <li>
+                        <a>NPC</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/logout') }}">Logout</a>
+                    </li>
+                    @elseif(Auth::user()->auth=='2')
+                    <li>
+                        <a>GM</a>
+                    </li>
                     <li>
                         <a href="{{ url('/logout') }}">Logout</a>
                     </li>
