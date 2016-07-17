@@ -13,13 +13,14 @@
 					<div class="panel-body">
 						<h2 class="text-center">發佈新任務</h2>
             	        <form class="form-horizontal" role="form" method="POST" action="{{ url('/newquest') }}">
+                          {{csrf_field()}}
             	        	<div class="form-group">
              	               <label for="catalog" class="col-md-2 col-md-offset-2 control-label">任務分類</label>
              	               <div class="col-md-6">
-            	        			<select id="catalog" class="form-control">
-										<option>工讀</option>
-										<option>活動</option>
-										<option>講座</option>
+            	        			<select id="catalog" name="catalog" class="form-control">
+										<option value="0">工讀</option>
+										<option value="1">活動</option>
+										<option value="2">講座</option>
 									</select>
 								</div>
 							</div>

@@ -29,6 +29,7 @@ Route::get('/quest', function () {
 Route::get('/newquest', function () {
     return view('newquest');
 });
+Route::post('/newquest','QuestController@store');
 
 Route::get('/account', function () {
     return view('account');
