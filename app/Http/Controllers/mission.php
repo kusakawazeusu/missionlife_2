@@ -18,8 +18,11 @@ class mission extends Controller
         'ocassion'=> 'required',
     	],$messages);
 
+        $order = DB::table('dialog')->where('ocassion',$request['ocassion'])->max('ordered');
+        $order = $order + 1;
+
     	DB::table('dialog')->insert(
-    		['ocassion'=>$request['ocassion'],'pic_path'=>$request['pic_path'],'name'=>$request['name'],'context'=>$request['context']]
+    		['ordered'=>$order,'ocassion'=>$request['ocassion'],'pic_path'=>$request['pic_path'],'name'=>$request['name'],'context'=>$request['context']]
     		);
 
     	return view('newdialog',['success'=>1]);

@@ -17,9 +17,10 @@
 //});
 
 Route::get('/diamanage','dialog_ctrler@showDia');
-
-Route::get('/diamanage/{$ocassion}','dialog_ctrler@manageDia');
-
+Route::get('/diamanage/{ocassion}','dialog_ctrler@manageDia')->name('manageDia');
+Route::get('/diamanage/{ocassion}/{ordered}/up','dialog_ctrler@orderUp');
+Route::get('/diamanage/{ocassion}/{ordered}/down','dialog_ctrler@orderDown');
+Route::get('/diamanage/{ocassion}/{id}/delete','dialog_ctrler@diaDel');
 
 Route::get('/quest', function () {
     return view('quest');

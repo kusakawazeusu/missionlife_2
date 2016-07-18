@@ -1,15 +1,13 @@
 @extends('layouts.main')
 
-@section('title','新增對話')
+@section('title','對話管理')
 
 @section('content')
 
 <div class="container">
 	@for($i=0;$i<count($dialogs);$i++)
 	
-	@if($i != 0 && $dialogs[$i]->ocassion == $dialogs[$i-1]->ocassion)
-		@continue
-	@endif
+	@continue($i != 0 && ($dialogs[$i]->ocassion == $dialogs[$i-1]->ocassion))
 
 	<div style="text-align:center;" class="col-md-2">
 		<div class="panel panel-default">
