@@ -20,7 +20,7 @@ class mission extends Controller
 
         $order = DB::table('dialog')->where('ocassion',$request['ocassion'])->max('ordered');
         $order = $order + 1;
-
+        //以上兩行取最高後+1
     	DB::table('dialog')->insert(
     		['ordered'=>$order,'ocassion'=>$request['ocassion'],'pic_path'=>$request['pic_path'],'name'=>$request['name'],'context'=>$request['context']]
     		);
