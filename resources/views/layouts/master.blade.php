@@ -9,7 +9,7 @@
   <script src="{{ asset('bootstrap/dist/js/bootstrap.min.js') }}"></script>
 </head>
 <body>
-
+<!-- hi -->
 @section('header')
 	@include('layouts.partials.header')
 @show
