@@ -28,30 +28,55 @@
              	               <label for="title" class="col-md-2 col-md-offset-2 control-label">任務標題</label>
              	               <div class="col-md-6">
              	                   <input id="title" class="form-control" name="title">
+                                     @if ($errors->has('title'))
+                                          <span class="help-block">
+                                          <strong>{{ $errors->first('title') }}</strong>
+                                          </span>
+                                     @endif
              	               </div>
              	            </div>
             	            <div class="form-group">
              	               	<label for="start_date" class="col-md-2 col-md-offset-2 control-label">報名開始日期</label>
              	               	<div class="col-md-6">
              	               		<input data-provide="datepicker" data-date-format="yyyy/mm/dd" data-date-autoclose="true" id="start_date" class="form-control" name="start_date">
+                                          @if ($errors->has('start_date'))
+                                                <span class="help-block">
+                                                <strong>{{ $errors->first('start_date') }}</strong>
+                                                </span>
+                                          @endif
              	           		</div>
              	          	</div>
             	            <div class="form-group">
              	               	<label for="end_date" class="col-md-2 col-md-offset-2 control-label">報名截止日期</label>
              	               	<div class="col-md-6">
              	               		<input data-provide="datepicker" data-date-format="yyyy/mm/dd" data-date-autoclose="true" id="end_date" class="form-control" name="end_date">
+                                          @if ($errors->has('end_date'))
+                                          <span class="help-block">
+                                          <strong>{{ $errors->first('end_date') }}</strong>
+                                          </span>
+                                          @endif
              	           		</div>
              	          	</div>
             	            <div class="form-group">
              	               	<label for="description" class="col-md-2 col-md-offset-2 control-label">任務描述</label>
              	               	<div class="col-md-6">
              	               		<textarea id="description" rows="5" class="form-control" name="description"></textarea>
+                                          @if ($errors->has('description'))
+                                          <span class="help-block">
+                                          <strong>{{ $errors->first('description') }}</strong>
+                                          </span>
+                                          @endif
              	           		</div>
              	          	</div>
             	            <div class="form-group">
              	               	<label for="salary" class="col-md-2 col-md-offset-2 control-label">給予薪資</label>
              	               	<div class="col-md-2">
              	               		<input id="salary" class="form-control" name="salary" placeholder="120">
+                                          @if ($errors->has('salary'))
+                                          <span class="help-block">
+                                          <strong>{{ $errors->first('salary') }}</strong>
+                                          </span>
+                                          @endif
              	           		</div>
              	           		<label for="salary" class="control-label">元</label>
              	          	</div>
@@ -59,6 +84,11 @@
              	               	<label for="workforce" class="col-md-2 col-md-offset-2 control-label">需要人數</label>
              	               	<div class="col-md-2">
              	               		<input id="workforce" class="form-control" name="workforce">
+                                          @if ($errors->has('workforce'))
+                                          <span class="help-block">
+                                          <strong>{{ $errors->first('workforce') }}</strong>
+                                          </span>
+                                          @endif
              	           		</div>
              	           		<label for="workforce" class="control-label">人</label>
              	          	</div>
