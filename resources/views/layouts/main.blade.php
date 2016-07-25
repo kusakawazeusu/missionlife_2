@@ -14,7 +14,6 @@
     <link href="{{ asset('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('mycss/style.css') }}" rel="stylesheet">
     <link href="{{ asset('mycss/full.css') }}" rel="stylesheet">
-
     <link href="{{ asset('bootstrap/dist/css/datepicker.css') }}" rel="stylesheet">
 
 
@@ -46,9 +45,11 @@
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
+                    <!--無障礙設備才看得到上面這行-->
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    <!--手機的選項三條線-->
                 </button>
                 <a class="navbar-brand" href="{{ url('/') }}">Mission Life</a>
             </div>
@@ -95,6 +96,9 @@
                     </li>
                     <li>
                         <a href="{{ url('/login') }}">Login</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/register') }}">Register</a>
                     </li>
                     @elseif(Auth::user()->auth=='0')
                     <li>

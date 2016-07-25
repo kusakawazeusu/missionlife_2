@@ -55,6 +55,7 @@ class AuthController extends Controller
             'max' => '這個欄位最多只能輸入255個字元。',
             'unique' => '這個Email已經被註冊過了！',
             'min' => '密碼需要至少6個字元',
+            'confirmed' => '輸入資料與確認密碼不符合。',
         ];
 
 
@@ -75,6 +76,8 @@ class AuthController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            'gender' => $data['gender'],
+            'department_id' => $data['department_id'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
