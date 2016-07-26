@@ -63,8 +63,18 @@
       					</table>
       				</div>
       				<div class="modal-footer">
-        				<button type="button" class="btn btn-danger">接下此任務</button>
-        				<button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+                @for($j=0; $j < count($ums) && $ums[$j]->quest_id != $quests[$i]->id; $j++)
+                @endfor
+                @if($j < count($ums))
+                  @if($ums[$j]->status == 1)
+                    <button type="button" class="btn btn-info">已完成此任務</button>
+                  @else
+                    <a href="/activity/cancel/{{$quests[$i]->id}}"><button type="button" class="btn btn-danger">放棄此任務</button></a>
+                  @endif
+                @else
+                  <a href="/activity/get/{{$quests[$i]->id}}"><button type="button" class="btn btn-danger">接下此任務</button></a>
+                @endif
+                <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
     				</div>
    				</div>
 			</div>

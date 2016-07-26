@@ -31,24 +31,36 @@ Route::get('/newquest', function () {
 });
 Route::post('/newquest','QuestController@store');
 
+
+
 Route::get('/account', function () {
     return view('account');
 });
 
 Route::get('/work', function () {
     $quests = DB::table('quest')->where('catalog','0')->get();
-    return view('work',['quests' => $quests]);
+    $ums = DB::table('um')->where('user_id',Auth::user()->id)->get();
+    return view('work',['quests' => $quests, 'ums' => $ums]);
 });
+Route::get('/work/get/{id}','UmController@getwork');
+Route::get('/work/cancel/{id}','UmController@cancelwork');
+
 
 Route::get('/activity', function () {
     $quests = DB::table('quest')->where('catalog','1')->get();
-    return view('activity',['quests' => $quests]);
+    $ums = DB::table('um')->where('user_id',Auth::user()->id)->get();
+    return view('activity',['quests' => $quests, 'ums' => $ums]);
 });
+Route::get('/activity/get/{id}','UmController@getactivity');
+Route::get('/activity/cancel/{id}','UmController@cancelactivity');
 
 Route::get('/conf', function () {
     $quests = DB::table('quest')->where('catalog','2')->get();
-    return view('conf',['quests' => $quests]);
+    $ums = DB::table('um')->where('user_id',Auth::user()->id)->get();
+    return view('conf',['quests' => $quests, 'ums' => $ums]);
 });
+Route::get('/conf/get/{id}','UmController@getconf');
+Route::get('/conf/cancel/{id}','UmController@cancelconf');
 
 Route::get('/', function () {
     $dialogs = DB::table('dialog')->where('ocassion','first_time')->get();
