@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','更改大頭貼')
+@section('title','更換大頭貼')
 
 @section('dialog')
 @endsection

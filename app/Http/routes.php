@@ -77,6 +77,10 @@ Route::get('/account/change_img',function(){
     return view('change_img');
 });
 Route::post('/account/change_img/{id}','UserController@change_img');
+Route::get('/account/change_pwd',function(){
+    return view('change_pwd');
+});
+Route::patch('/account/change_pwd/{id}','UserController@update_pwd');
 
 Route::get('/work',['as'=>'work', function () {
     $quests = DB::table('quest')->where('catalog','0')->get();

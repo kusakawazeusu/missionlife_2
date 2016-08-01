@@ -71,6 +71,7 @@
 							<div class="row">
 								<div class="col-xs-6 col-sm-5 col-md-4">
 								<a href="#" class="btn btn-warning btn-block" data-toggle="modal" data-target="#myModal" role="button">修改個人資料</a>
+                                <a href="{{url('/account/change_pwd')}}" class="btn btn-warning btn-block" role="button">修改密碼</a>
 								</div>
 							</div>
 							

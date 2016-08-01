@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
 use Validator;
+use Hash;
 use Auth;
 use File;
 use Carbon\Carbon;
@@ -28,7 +29,7 @@ class UserController extends Controller
         ];
 
         $this->validate($request,[
-            'name'=>'required|max:255:',
+            'name'=>'required|max:255',
             ],$messages);
 
 
@@ -95,8 +96,8 @@ class UserController extends Controller
             return $fileName;
             //測試一下上面的if為什麼不會過*/
 
-/*
-  		if ($validator->fails()) {
+
+  		/*if ($validator->fails()) {
 		    // send back to the page with the input data and errors
 		    // return Redirect::to('upload')->withInput()->withErrors($validator);
 		    return '$validator->fails()';
@@ -121,5 +122,65 @@ class UserController extends Controller
 		    	return 'upload failed';
 		    }
 		}//else*/
+    }
+    public function update_pwd(Request $request,$id){
+        $messages = [
+            'required' => '這個欄位是必填的！',
+            'min' => '密碼需要至少:min個字元',
+            'confirmed' => '輸入資料與確認密碼不符合。',
+        ];
+
+        $user = User::find($id);
+        if(Hash::check($request->old_pwd,$user->password)){
+            // 舊密碼相同時
+            $this->validate($request,[
+            'old_pwd'=>'required',
+            'new_pwd'=>'required|min:6|confirmed',
+            ],$messages);
+            //假如其它欄位驗證通過
+            // 以下是將新密碼存入
+            $user->fill([
+                'password' => Hash::make($request->new_pwd)
+            ])->save();
+            return redirect('/account');
+        }
+        else{
+            // 輸入舊密碼錯誤
+            $validator = Validator::make($request->all(),[
+            'old_pwd'=>'required',
+            'new_pwd'=>'required|min:6|confirmed',
+            ],$messages);
+            $validator->after(function($validator){
+                $validator->errors()->add('old_pwd', '密碼不符合！');
+            });
+            if ($validator->fails()) {
+                return redirect('/account/change_pwd')
+                        ->withErrors($validator)
+                        ->withInput();
+            }
+                // return redirect('/account/change_pwd');
+        }
+        /*
+        $validator = Validator::make($request->all(),[
+            'old_pwd'=>'required',
+            'new_pwd'=>'required|min:6|confirmed',
+            ],$messages);
+
+        $validator->after(function($validator,Request $request) {
+            if (Hash::check($request->old_pwd,$user->password)) {
+                
+            }else{
+                $validator->errors()->add('old_pwd', '密碼不符合！');
+            }
+        });
+
+        if ($validator->fails()) {
+            //
+            return redirect('/account/change_pwd')
+                        ->withErrors($validator)
+                        ->withInput();
+        }*/
+
+
     }
 }
