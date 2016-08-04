@@ -33,7 +33,7 @@
 			<br> -->
 			<div class="row">
 			<div class="col-xs-12">
-				<ul class="nav nav-tabs nav-justified">
+				<ul class="nav nav-tabs">
   					<li class="active"><a data-toggle="tab" href="#home">個人資料</a></li>
   					<li><a data-toggle="tab" href="#m1">成就列表</a></li>
   					<li><a data-toggle="tab" href="#m2">技能列表</a></li>
@@ -66,7 +66,8 @@
 							@else
 							<h4>性別：女</h4>
 							@endif
-							<h4>系所：{{ Auth::user()->department_id }}</h4>
+							<h4>系所：{{ Auth::user()->department->name }}</h4>
+							<!-- <h4>測試：{{ Auth::user()->Um()->where('quest_id', '6')->first()->status }}</h4> -->
 							<h4>聲望：{{ Auth::user()->fame }}</h4>
 							<div class="row">
 								<div class="col-xs-6 col-sm-5 col-md-4">

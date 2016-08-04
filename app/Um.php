@@ -9,11 +9,11 @@ class Um extends Model
     //
     protected $table = 'um';
 
-    public function Users(){
-    	return $this->belongsTo('App/Users', 'user_id');
+    public function User(){
+    	return $this->belongsTo('App\User', 'user_id','id');
     }
 
     public function Quest(){
-    	return $this->belongsTo('App/Quest', 'quest_id');
+    	return $this->belongsTo('App\Quest', 'quest_id');
     }
 }
