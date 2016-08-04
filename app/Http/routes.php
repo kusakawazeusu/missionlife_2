@@ -35,6 +35,7 @@ Route::get('/update',function(){
 });
 
 
+
 Route::get('/diamanage','dialog_ctrler@showDia');
 Route::get('/diamanage/{ocassion}','dialog_ctrler@manageDia')->name('manageDia');
 Route::get('/diamanage/{ocassion}/{ordered}/up','dialog_ctrler@orderUp');
@@ -70,6 +71,12 @@ Route::get('/account', function () {
         return view('account',['ums' => $ums,'quests'=>$quests,'no_quest'=>'0']);
     }
 });
+Route::patch('/account/{id}','UserController@update');
+
+Route::get('/account/change_img',function(){
+    return view('change_img');
+});
+Route::post('/account/change_img/{id}','UserController@change_img');
 
 Route::get('/work',['as'=>'work', function () {
     $quests = DB::table('quest')->where('catalog','0')->get();

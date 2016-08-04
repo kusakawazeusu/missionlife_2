@@ -28,7 +28,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Um', 'user_id','id');
     }
 
-     public function department()
+    public function department()
     {
         return $this->belongsTo('App\Department','department_id','id');
     }

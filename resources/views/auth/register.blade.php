@@ -50,8 +50,7 @@
                                 </label>
                             </div>
                         </div>
-<!--
-                        <div class="form-group">
+                        <!--<div class="form-group">
                           <label class="col-md-4 control-label" for="sel1">系別</label>
                           <div class="col-md-6">
                               <select class="form-control" id="department_id">
@@ -61,8 +60,8 @@
                                 <option>4</option>
                               </select>
                           </div>
-                        </div>
--->                     <div class="form-group">
+                        </div>-->                     
+                        <div class="form-group">
                             <label class="col-md-4 control-label" for="department_id">系別</label>
                             <div class="col-md-6">
                                 <select class="form-control" id="department_id" name="department_id">

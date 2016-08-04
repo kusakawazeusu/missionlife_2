@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title','任務大廳 - 講座')
+@section('title','冒險者資料')
 
 @section('dialog')
 @endsection
@@ -47,11 +47,11 @@
 						<div class="row">
 						<div class="col-xs-6">
 							<br>
-							<img  src="default.png" class="img-rounded img-responsive center-block">
+							<img  src="{{asset('personal_img/'.Auth::user()->picture_path)}}" class="img-rounded img-responsive center-block" alt="personal_image" style="max-height:400px;">
 							<br>
 							<div class="row">
 								<div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-4">
-								<a href="#" class="btn btn-warning btn-block" role="button">更換大頭貼</a>
+								<a href="{{url('/account/change_img')}}" class="btn btn-warning btn-block" role="button">更換大頭貼</a>
 								</div>
 							</div>
 						</div>
@@ -67,11 +67,10 @@
 							<h4>性別：女</h4>
 							@endif
 							<h4>系所：{{ Auth::user()->department->name }}</h4>
-							<!-- <h4>測試：{{ Auth::user()->Um()->where('quest_id', '6')->first()->status }}</h4> -->
 							<h4>聲望：{{ Auth::user()->fame }}</h4>
 							<div class="row">
 								<div class="col-xs-6 col-sm-5 col-md-4">
-								<a href="#" class="btn btn-warning btn-block" role="button">修改個人資料</a>
+								<a href="#" class="btn btn-warning btn-block" data-toggle="modal" data-target="#myModal" role="button">修改個人資料</a>
 								</div>
 							</div>
 							
@@ -124,9 +123,135 @@
 				</div>
 			</div>
 			</div>
-		</div>
+			<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text-center">修改個人資料</h4>
+        </div>
+        <div class="modal-body"><!--<div class="modal-body">-->
+            <form class="form-horizontal" role="form" method="POST" action="{{ url('/account/'.Auth::user()->id) }}">
+            			{{ method_field('PATCH') }}
+                        {{ csrf_field() }}
 
+                        <div class="form-group{{ $errors->has('name') ? ' has-error has-feedback' : '' }}">
+                          <div class="row">
+                            <label for="name" class="col-xs-offset-3 col-xs-1 col-sm-4 col-sm-offset-0 control-label">姓名</label>
+                            <div class="col-xs-offset-0 col-xs-4 col-sm-6 col-sm-offset-0">
+                                <input id="name" type="text" class="form-control" name="name" value="{{Auth::user()->name}}">
+
+                                @if ($errors->has('name'))
+                                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                          </div>
+                        </div>
+       
+                        <div class="form-group">
+                          <div class="row">
+                            <label class="col-xs-offset-3 col-xs-1 col-sm-4 col-sm-offset-0 control-label">性別</label>
+                            <div class="col-xs-offset-0 col-xs-4 col-sm-6 col-sm-offset-0">
+                                @if (Auth::user()->gender==1)
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender" value="1" checked>男
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender" value="0">女
+                                </label>
+                                @else
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender" value="1">男
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender" value="0" checked>女
+                                </label>
+                                @endif
+                            </div>
+                          </div>
+                        </div>
+                                            
+                        <div class="form-group">
+                          <div class="row">
+                            <label class="col-xs-offset-3 col-xs-1 col-sm-4 col-sm-offset-0 control-label" for="department_id">系別</label>
+                            <div class="col-xs-offset-0 col-xs-4 col-sm-6 col-sm-offset-0">
+                                <select class="form-control" id="department_id" name="department_id">
+                                    <optgroup label="工程學院">
+                                        <option value="0">自動化及控制研究所</option>
+                                        <option value="1">機械工程系(所)</option>
+                                        <option value="2">材料科學與工程系(所)</option>
+                                        <option value="3">營建工程系(所)</option>
+                                        <option value="4">化學工程系(所)</option>
+                                    </optgroup>
+                                    <optgroup label="電資學院">
+                                        <option value="5">電子工程系(所)</option>
+                                        <option value="6">電機工程系(所)</option>
+                                        <option value="7">資訊工程系(所)</option>
+                                        <option value="8">光電工程研究所</option>
+                                    </optgroup>
+                                    <optgroup label="管理學院">
+                                        <option value="9">管理研究所</option>
+                                        <option value="10">工業管理系(所)</option>
+                                        <option value="11">企業管理系(所)</option>
+                                        <option value="12">財務金融研究所</option>
+                                        <option value="13">資訊管理系(所)</option>
+                                        <option value="14">管理學院MBA</option>
+                                        <option value="15">EMBA暨管研所博士班</option>
+                                    </optgroup>
+                                    <optgroup label="設計學院">
+                                        <option value="16">建築系(所)</option>
+                                        <option value="17">工商業設計系(所)</option>
+                                    </optgroup>
+                                    <optgroup label="人文社會學院">
+                                        <option value="18">數位學習與教育研究所</option>
+                                        <option value="19">應用外語系(所)</option>
+                                    </optgroup>
+                                    <optgroup label="應用科技學院(精誠榮譽學院)">
+                                        <option value="20">應用科技研究所</option>
+                                        <option value="21">全校不分系學士班</option>
+                                        <option value="22">醫學工程研究所</option>
+                                        <option value="23">色彩與照明科技研究所</option>
+                                        <option value="24">應用科技學士學位學程</option>
+                                    </optgroup>
+                                    <optgroup label="智慧財產學院">
+                                        <option value="25">科技管理研究所</option>
+                                        <option value="26">專利研究所</option>
+                                        <option value="27">科技管理學士學位學程</option>
+                                        <option value="28">智慧財產學士學位學程</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                           </div>
+                        </div>
+
+                        <div class="form-group">
+	                        <div class="row"></div>
+	                        <div class="col-xs-6 col-xs-offset-4">
+	                          <button type="submit" class="btn btn-primary">
+	                             送出資料
+	                          </button>
+	                          <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+	                        </div>
+	                        </div>
+                        </div>
+                    </form> 
+        </div><!--<div class="modal-body"> END-->
+      </div> <!-- <div class="modal-content"> END-->
+      
+    </div>
+  </div> <!-- <div class="modal fade" id="myModal" role="dialog"> END-->
+		</div>
+<script type="text/javascript">
+	document.getElementById("department_id").selectedIndex = "{{Auth::user()->department_id}}";
+</script>
 	@endif
+
 
 
 @endsection

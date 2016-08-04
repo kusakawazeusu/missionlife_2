@@ -29,5 +29,6 @@ class CreateUmTable extends Migration
     public function down()
     {
         //
+        Schema::drop('um');
     }
 }
