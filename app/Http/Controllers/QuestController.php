@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Quest;
 use App\Http\Requests;
 use Auth;
+use DB;
 
 class QuestController extends Controller
 {
@@ -17,6 +18,27 @@ class QuestController extends Controller
     //
     public function store(Request $request)
     {
+
+        //echo "<script>alert(".$request->re.")</script>";
+        /*
+        for($i=0;$i<count($request->require);$i++)
+        {
+            echo "Require[".$i."] = ".$request->require[$i]."<br>";
+        }
+        for($i=0;$i<count($request->eng_input);$i++)
+        {
+            echo "Eng_input[".$i."] = ".$request->eng_input[$i]."<br>";
+        }
+        for($i=0;$i<count($request->custom_input);$i++)
+        {
+            echo "Custom[".$i."] = ".$request->custom_input[$i]."<br>";
+        }
+        for($i=0;$i<count($request->jp_input);$i++)
+        {
+            echo "JP[".$i."] = ".$request->jp_input[$i]."<br>";
+        }
+        */
+        
         $messages = [
             'required' => '這個欄位是必填的！',
             'integer' => '必須是整數！',
@@ -31,7 +53,7 @@ class QuestController extends Controller
             'salary'=>'required|integer|min:120',
             'workforce'=>'required|integer|min:1',
             ],$messages);
-
+        
     	$quest = new Quest;
     	$quest->name = $request->title;
     	$quest->creator = Auth::user()->name;
@@ -44,6 +66,35 @@ class QuestController extends Controller
     	$quest->workforce = $request->workforce;//人數
     	$quest->catalog = $request->catalog;
     	$quest->save();
+
+        for($i=0;$i<count($request->require);$i++)
+        {
+            if( $request->require[$i] == '多益TOEIC' || $request->require[$i] == '托福TOEFL' || $request->require[$i] == '雅思IELT' )
+            {
+                DB::table('mission_require')->insert([
+                    'mission_id'=>DB::table('quest')->where('name',$request->title)->value('id'),
+                    'require_catalog'=>$request->require[$i],
+                    'require_parameter'=>$request->eng_input[$i]
+                ]);
+            }
+            else if( $request->require[$i] == '日文檢定JLPT')
+            {
+                DB::table('mission_require')->insert([
+                    'mission_id'=>DB::table('quest')->where('name',$request->title)->value('id'),
+                    'require_catalog'=>$request->require[$i],
+                    'require_parameter'=>$request->jp_input[$i]
+                ]);
+            }
+            else if( $request->require[$i] == 'custom')
+            {
+                DB::table('mission_require')->insert([
+                    'mission_id'=>DB::table('quest')->where('name',$request->title)->value('id'),
+                    'require_catalog'=>$request->require[$i],
+                    'require_parameter'=>$request->custom_input[$i]
+                ]);
+            }
+        }
+
     	return redirect('/');
     }
 }

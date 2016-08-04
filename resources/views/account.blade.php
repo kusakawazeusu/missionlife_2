@@ -55,7 +55,37 @@
 						<h3>道具欄</h3>
 					</div>
 					<div id="m4" class="tab-pane fade">
+						@if( $no_quest == 0 )
 						<h3>進行中任務</h3>
+						<table class="table table-hover table-bordered">
+							<thead>
+							<tr>
+								<th>任務標題</th>
+								<th>發布單位</th>
+								<th>開始時間</th>
+								<th>結束時間</th>
+								<th>獎勵冒險點數</th>
+								<th>薪資</th>
+								<th>需要人數</th>
+							</tr>
+							</thead>
+						<tbody>
+  							@for($i=0; $i < count($quests); $i++)
+  							<tr>
+  								<td>{{ $quests[$i]->name }}</td>
+  								<td>{{ $quests[$i]->creator }}</td>
+  								<td>{{ $quests[$i]->start_at }}</td>
+  								<td>{{ $quests[$i]->end_at }}</td>
+  								<td>{{ $quests[$i]->point }}</td>
+  								<td>{{ $quests[$i]->salary }}</td>
+  								<td>{{ $quests[$i]->workforce }}</td>
+  							</tr>
+							@endfor
+						</tbody>
+						</table>
+						@else
+						<h3>目前尚無進行中任務，趕快踏出你的第一步吧！</h3>
+						@endif
 					</div>
 				</div>
 

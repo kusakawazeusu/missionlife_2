@@ -11,8 +11,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //$this->call('quest_seeder');
+        $this->call('quest_seeder');
         //$this->call('dialog_seeder');
-        DB::table('dialog')->delete();
+        //DB::table('dialog')->delete();
     }
 }

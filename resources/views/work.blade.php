@@ -18,6 +18,27 @@
 			唔喔！還沒完成「認證」的話，無法使用完整的Mission Life喔！點擊<a href="{{ url('/active') }}">這裡</a>完成認證吧！
 		</div>
 	@else
+    <?php $cou = 1; ?>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script>
+      //jquery here
+      $(document).ready(function(){
+
+        @if(session()->has('action'))
+          $("#suc").fadeIn().delay(2000).fadeOut();
+        @endif
+
+      });
+    </script>
+
+    <div style="display:none;" id="suc" class="container">
+      <div class="alert alert-info">
+        你好。
+      </div>
+    </div>
+
 		@for($i=0; $i < count($quests); $i++)
 		<div class="modal fade" id="quest{{$i}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
@@ -48,6 +69,21 @@
       							<td>任務描述</td>
       							<td>{{ $quests[$i]->description }}</td>
       						</tr>
+                  <tr>
+                    <td>任務需求</td>
+                    <td>
+
+                      @for($j=0;$j<count($mission_require);$j++)
+                        @if( $quests[$i]->id == $mission_require[$j]->mission_id && $mission_require[$j]->require_catalog != 'custom' )
+                          {{ $cou++ }}.{{ $mission_require[$j]->require_catalog }} : {{ $mission_require[$j]->require_parameter }}<br>
+                        @elseif( $quests[$i]->id == $mission_require[$j]->mission_id && $mission_require[$j]->require_catalog == 'custom' )
+                          {{ $cou++ }}.{{ $mission_require[$j]->require_parameter }}<br>
+                        @endif
+                      @endfor
+                      <?php $cou = 1; ?>
+
+                    </td>
+                  </tr>
       						<tr>
       							<td>薪資待遇</td>
       							<td>新台幣{{ $quests[$i]->salary }}元</td>
@@ -72,7 +108,7 @@
                     <a href="/work/cancel/{{$quests[$i]->id}}"><button type="button" class="btn btn-danger">放棄此任務</button></a>
                   @endif
                 @else
-        				  <a href="/work/get/{{$quests[$i]->id}}"><button type="button" class="btn btn-danger">接下此任務</button></a>
+        				  <a class="btn btn-danger" href="/work/get/{{$quests[$i]->id}}">接下此任務</a>
                 @endif
         				<button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
     				</div>

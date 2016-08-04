@@ -20,10 +20,16 @@
   color: #ecf0f1;
 }
 .navbar-default .navbar-nav > li > .dropdown-menu {
-  background-color: #3c76e7;
+  background-color: #FFFFFF;
 }
+
+
+
+
 .navbar-default .navbar-nav > li > .dropdown-menu > li > a {
-  color: #ecf0f1;
+  color: #000000;
+      word-wrap: break-word;
+    white-space: normal;
 }
 .navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
 .navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
