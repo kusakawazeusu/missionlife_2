@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('picture_path')->default('0');
             $table->string('active_key')->default(rand(1000000,9999999));
             $table->boolean('activation')->default(false);
             $table->integer('point')->default(0);

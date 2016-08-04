@@ -31,5 +31,6 @@ class Dialog extends Migration
     public function down()
     {
         //
+        Schema::drop('dialog');
     }
 }

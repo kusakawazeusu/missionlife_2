@@ -21,18 +21,19 @@
 		<div class="container">
 			<ol class="breadcrumb">
 				<li><a href="{{ url('/') }}">首頁</a></li>
-				<li><a href="{{ url('/quest') }}">任務大廳</a></li>
+				<!-- <li><a href="{{ url('/quest') }}">任務大廳</a></li> -->
 				<li class="active">冒險者資料</li>
 			</ol>
-			<div class="row">
-				<div class="col-md-2 col-md-offset-5">
+			<!-- <div class="row">
+				<div class="col-md-12">
 					<img style="height:120px;weight:120px;" src="default.png" class="img-rounded center-block">
 					<h3 class="text-center">{{ Auth::user()->name }}</h3>
 				</div>
 			</div>
-			<br>
+			<br> -->
 			<div class="row">
-				<ul class="nav nav-tabs">
+			<div class="col-xs-12">
+				<ul class="nav nav-tabs nav-justified">
   					<li class="active"><a data-toggle="tab" href="#home">個人資料</a></li>
   					<li><a data-toggle="tab" href="#m1">成就列表</a></li>
   					<li><a data-toggle="tab" href="#m2">技能列表</a></li>
@@ -41,9 +42,40 @@
 				</ul>
 
 				<div class="tab-content">
+				
 					<div id="home" class="tab-pane fade in active">
-						<h3>個人資料</h3>
-						
+						<div class="row">
+						<div class="col-xs-6">
+							<br>
+							<img  src="default.png" class="img-rounded img-responsive center-block">
+							<br>
+							<div class="row">
+								<div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-4">
+								<a href="#" class="btn btn-warning btn-block" role="button">更換大頭貼</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-6">
+							<br>
+							<h4>姓名：{{ Auth::user()->name }}</h4>
+							<h4>email：{{ Auth::user()->email }}</h4>
+							<h4>冒險點數：{{ Auth::user()->point }}點</h4>
+							@if(Auth::user()->gender==1)
+							<h4>性別：男</h4>
+							@else
+							<h4>性別：女</h4>
+							@endif
+							<h4>系所：{{ Auth::user()->department_id }}</h4>
+							<h4>聲望：{{ Auth::user()->fame }}</h4>
+							<div class="row">
+								<div class="col-xs-6 col-sm-5 col-md-4">
+								<a href="#" class="btn btn-warning btn-block" role="button">修改個人資料</a>
+								</div>
+							</div>
+							
+						</div>
+						</div> <!-- row -->
 					</div>
 					<div id="m1" class="tab-pane fade">
 						<h3>成就列表</h3>
@@ -87,8 +119,9 @@
 						<h3>目前尚無進行中任務，趕快踏出你的第一步吧！</h3>
 						@endif
 					</div>
+					
 				</div>
-
+			</div>
 			</div>
 		</div>
 
