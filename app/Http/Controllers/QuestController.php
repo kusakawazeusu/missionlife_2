@@ -16,6 +16,34 @@ class QuestController extends Controller
     	$this->middleware('auth');
 	}
     //
+    public function showNewquest()
+    {
+        return view('newquest');
+    }
+    public function showQuestlobby()
+    {
+        return view('quest');
+    }
+    public function showWork()
+    {
+        $quests = DB::table('quest')->where('catalog','0')->get();  // 從資料庫抓取工讀資料
+        $mission_require = DB::table('mission_require')->get();  // 從資料庫抓取工讀條件
+        $ums = DB::table('um')->where('user_id',Auth::user()->id)->get();  // 從資料庫抓取使用者-工讀資料
+        return view('work',['quests' => $quests, 'ums' => $ums, 'mission_require' => $mission_require]);
+    }
+    public function showActivity()
+    {
+        $quests = DB::table('quest')->where('catalog','1')->get();
+        $ums = DB::table('um')->where('user_id',Auth::user()->id)->get();
+        return view('activity',['quests' => $quests, 'ums' => $ums]);
+    }
+    public function showConf()
+    {
+        $quests = DB::table('quest')->where('catalog','2')->get();
+        $ums = DB::table('um')->where('user_id',Auth::user()->id)->get();
+        return view('conf',['quests' => $quests, 'ums' => $ums]);
+    }
+
     public function store(Request $request)
     {
 

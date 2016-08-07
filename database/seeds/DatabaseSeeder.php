@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call('UsersTableSeeder');
-        $this->call('quest_seeder');
+        //$this->call('quest_seeder');
         $this->call('DepartmentsTableSeeder');
         //$this->call('dialog_seeder');
         //DB::table('dialog')->delete();
