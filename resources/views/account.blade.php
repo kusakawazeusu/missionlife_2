@@ -100,6 +100,7 @@
 								<th>獎勵冒險點數</th>
 								<th>薪資</th>
 								<th>需要人數</th>
+								<th>任務狀態</th>
 							</tr>
 							</thead>
 						<tbody>
@@ -112,6 +113,17 @@
   								<td>{{ $quests[$i]->point }}</td>
   								<td>{{ $quests[$i]->salary }}</td>
   								<td>{{ $quests[$i]->workforce }}</td>
+  								<td>
+  									@if($quests[$i]->status == '0')
+  										審核中
+  									@elseif($quests[$i]->status == '1')
+  										進行中
+  									@elseif($quests[$i]->status == '2')
+  										已完成
+  									@elseif($quests[$i]->status == '3')
+  										ㄏㄏ
+  									@endif
+  								</td>
   							</tr>
 							@endfor
 						</tbody>

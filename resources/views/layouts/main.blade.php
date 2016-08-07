@@ -99,9 +99,6 @@
                     <li>
                         <a href="{{ url('/quest') }}">任務大廳</a>
                     </li>
-                    <li>
-                        <a href="{{ url('/account') }}">冒險者資料</a>
-                    </li>
                 </ul>
                 @elseif(Auth::Guest() == false && Auth::user()->auth == '1')
                 <ul class="nav navbar-nav navbar-left">
@@ -141,7 +138,11 @@
                     </li>
                     @elseif(Auth::user()->auth=='0')
                     <li>
-                        <a>使用者</a>
+                        @if(Auth::user()->gender=='1')
+                        <a href="{{ url('/account') }}"><i class="icon-male icon-large"> <strong>{{ Auth::user()->name }}</strong></i></a>
+                        @else
+                        <a href="{{ url('/account') }}"><i class="icon-female icon-large"> <strong>{{ Auth::user()->name }}</strong></i></a>
+                        @endif
                     </li>
 
                     <?php if(!Auth::Guest()) {$message = DB::table('message')->where('user_id',Auth::user()->id)->get();} ?>
@@ -154,7 +155,7 @@
 
                             <li class="dropdown-header">近期通知</li>
                             <li role="separator" class="divider"></li>
-                            @for($i=count($message)-1;$i>=0;$i--)
+                            @for($i=count($message)-1;($i>=0 && $i>=count($message)-5);$i--)
                             <li>
                                 <i class="icon-gift icon-2x"></i><a href="/{{$message[$i]->address}}">{!!html_entity_decode($message[$i]->content)!!}</a>
                             </li>

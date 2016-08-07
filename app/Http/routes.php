@@ -54,21 +54,21 @@ Route::post('/newquest','QuestController@store');
 
 
 Route::get('/account', function () {
-    
-    $ums = DB::table('um')->where('user_id',Auth::user()->id)->get();
 
-    if( count($ums) == 0 )
+    $ums = DB::table('um')->where('user_id',Auth::user()->id)->get();  // 該使用者接的任務的集合
+
+    if( count($ums) == 0 )  // 該使用者並未接取任何任務
     {
         return view('account',['ums' => $ums,'no_quest'=>'1']);
     }
     else
     {
-        for($i=0;$i<count($ums);$i++)
-        {
-            $quests = DB::table('quest')->where('id',$ums[$i]->quest_id)->get();
-        }
-    
-        return view('account',['ums' => $ums,'quests'=>$quests,'no_quest'=>'0']);
+        $quests = DB::table('quest')
+                  ->join('um','quest.id','=','um.quest_id')
+                  ->select('quest.*','um.status')
+                  ->get();
+
+        return view('account',['quests'=>$quests,'no_quest'=>'0']);
     }
 });
 Route::patch('/account/{id}','UserController@update');

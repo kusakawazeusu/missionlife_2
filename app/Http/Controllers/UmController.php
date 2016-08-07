@@ -50,7 +50,7 @@ class UmController extends Controller
     public function cancelwork($id)
     {
     	DB::table('um')->where('user_id', Auth::user()->id)->where('quest_id', $id)->delete();
-    	return redirect('/work');
+    	return redirect()->route('work')->with('action','failed');
     }
 
     public function getactivity($id)
