@@ -27,15 +27,25 @@
       $(document).ready(function(){
 
         @if(session()->has('action'))
-          $("#suc").fadeIn().delay(2000).fadeOut();
+          @if( session('action') == 'success' )
+            $("#suc").fadeIn().delay(2000).animate({left:'-=400px',opacity:'0'},"slow");
+          @elseif ( session('action') == 'failed' )
+            $("#fail").fadeIn().delay(2000).animate({left:'-=400px',opacity:'0'},"slow");
+          @endif
         @endif
 
       });
     </script>
 
-    <div style="display:none;" id="suc" class="container">
+    <div style="position:absolute;display:none;" id="suc" class="col-md-3">
       <div class="alert alert-info">
-        你好。
+        <i class="icon-thumbs-up icon-large"></i> 任務接取成功，請稍候審核！
+      </div>
+    </div>
+
+    <div style="position:absolute;display:none;" id="fail" class="col-md-3">
+      <div class="alert alert-danger">
+        <i class="icon-frown icon-large"></i> 任務接取失敗！
       </div>
     </div>
 

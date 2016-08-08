@@ -91,12 +91,12 @@
 			<table class="table table-hover table-bordered">
 				<thead>
 					<tr>
-						<th><a href="{{ url('/activity/orderbytitle') }}">任務標題</a></th>
-						<th><a href="{{ url('/activity/orderbynpc') }}">發布單位</a></th>
-						<th><a href="{{ url('/activity/orderbystart') }}">開始時間</a></th>
-						<th><a href="{{ url('/activity/orderbyend') }}">結束時間</a></th>
-						<th><a href="{{ url('/activity/orderbypoint') }}">獎勵冒險點數</a></th>
-						<th><a href="{{ url('/activity/orderbysalary') }}">薪資</a></th>
+						<th>任務標題</th>
+						<th>發布單位</th>
+						<th>開始時間</th>
+						<th>結束時間</th>
+						<th>獎勵冒險點數</th>
+						<th>薪資</th>
 						<th>需要人數</th>
 					</tr>
 				</thead>

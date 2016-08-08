@@ -8,12 +8,36 @@ use App\User;
 use Validator;
 use Hash;
 use Auth;
+use DB;
 use File;
 use Carbon\Carbon;
 
 class UserController extends Controller
 {
     //
+    public function showAccount() {
+        $ums = DB::table('um')->where('user_id',Auth::user()->id)->get();  // 該使用者接的任務的集合
+
+        if( count($ums) == 0 )  // 該使用者並未接取任何任務
+        {
+            return view('account',['ums' => $ums,'no_quest'=>'1']);
+        }
+        else
+        {
+            $quests = DB::table('quest')
+                    ->join('um','quest.id','=','um.quest_id')
+                    ->select('quest.*','um.status')
+                    ->get();
+
+            return view('account',['quests'=>$quests,'no_quest'=>'0']);
+        }
+    }
+
+    public function showChangeimg()
+    {
+        return view('change_img');
+    }
+
 
     public function update(Request $request,$id){
     	//$user = User::where('username',$request->username)->first();
@@ -123,6 +147,13 @@ class UserController extends Controller
 		    }
 		}//else*/
     }
+
+    public function showChangepwd()
+    {
+        return view('change_pwd');
+    }
+
+
     public function update_pwd(Request $request,$id){
         $messages = [
             'required' => '這個欄位是必填的！',

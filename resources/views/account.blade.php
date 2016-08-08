@@ -47,11 +47,11 @@
 						<div class="row">
 						<div class="col-xs-6">
 							<br>
-							<img  src="{{asset('personal_img/'.Auth::user()->picture_path)}}" class="img-rounded img-responsive center-block" alt="personal_image" style="max-height:400px;">
+							<img  src="{{asset('personal_img/'.Auth::user()->picture_path)}}" class="img-rounded img-responsive center-block" alt="personal_image" style="max-height:300px;">
 							<br>
 							<div class="row">
 								<div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-4">
-								<a href="{{url('/account/change_img')}}" class="btn btn-warning btn-block" role="button">更換大頭貼</a>
+								<a href="{{url('/account/change_img')}}" class="btn btn-info btn-block" role="button"><i class="icon-camera"> 更換大頭貼</i></a>
 								</div>
 							</div>
 						</div>
@@ -59,7 +59,7 @@
 						<div class="col-xs-6">
 							<br>
 							<h4>姓名：{{ Auth::user()->name }}</h4>
-							<h4>email：{{ Auth::user()->email }}</h4>
+							<h4>E-mail：{{ Auth::user()->email }}</h4>
 							<h4>冒險點數：{{ Auth::user()->point }}點</h4>
 							@if(Auth::user()->gender==1)
 							<h4>性別：男</h4>
@@ -70,8 +70,8 @@
 							<h4>聲望：{{ Auth::user()->fame }}</h4>
 							<div class="row">
 								<div class="col-xs-6 col-sm-5 col-md-4">
-								<a href="#" class="btn btn-warning btn-block" data-toggle="modal" data-target="#myModal" role="button">修改個人資料</a>
-                                <a href="{{url('/account/change_pwd')}}" class="btn btn-warning btn-block" role="button">修改密碼</a>
+								<a href="#" class="btn btn-info btn-block" data-toggle="modal" data-target="#myModal" role="button"><i class="icon-pencil"> 修改個人資料</i></a>
+                                <a href="{{url('/account/change_pwd')}}" class="btn btn-info btn-block" role="button"><i class="icon-lock"> 修改密碼</i></a>
 								</div>
 							</div>
 							
@@ -100,6 +100,7 @@
 								<th>獎勵冒險點數</th>
 								<th>薪資</th>
 								<th>需要人數</th>
+								<th>任務狀態</th>
 							</tr>
 							</thead>
 						<tbody>
@@ -112,6 +113,17 @@
   								<td>{{ $quests[$i]->point }}</td>
   								<td>{{ $quests[$i]->salary }}</td>
   								<td>{{ $quests[$i]->workforce }}</td>
+  								<td>
+  									@if($quests[$i]->status == '0')
+  										審核中
+  									@elseif($quests[$i]->status == '1')
+  										進行中
+  									@elseif($quests[$i]->status == '2')
+  										已完成
+  									@elseif($quests[$i]->status == '3')
+  										ㄏㄏ
+  									@endif
+  								</td>
   							</tr>
 							@endfor
 						</tbody>
