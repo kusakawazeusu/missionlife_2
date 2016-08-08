@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Dialog extends Migration
+class CreateDepartmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,12 @@ class Dialog extends Migration
      */
     public function up()
     {
-        Schema::create('dialog', function (Blueprint $table) {
-            $table->integer('ordered')->default(0);
-            $table->increments('id')->unique();
-            $table->string('ocassion');
-            $table->string('pic_path');
+        //
+        Schema::create('departments', function (Blueprint $table) {
+            $table->integer('id');
+            $table->primary('id');
             $table->string('name');
-            $table->string('context');
+            $table->integer('people')->default(0);
             $table->timestamps();
         });
     }
@@ -30,7 +29,7 @@ class Dialog extends Migration
      */
     public function down()
     {
-        //
-        Schema::drop('dialog');
+        //departments
+        Schema::drop('departments');
     }
 }

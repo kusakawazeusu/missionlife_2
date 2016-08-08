@@ -63,8 +63,18 @@
       					</table>
       				</div>
       				<div class="modal-footer">
-        				<button type="button" class="btn btn-danger">接下此任務</button>
-        				<button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+                @for($j=0; $j < count($ums) && $ums[$j]->quest_id != $quests[$i]->id; $j++)
+                @endfor
+                @if($j < count($ums))
+                  @if($ums[$j]->status == 1)
+                    <button type="button" class="btn btn-info">已完成此任務</button>
+                  @else
+                    <a href="/activity/cancel/{{$quests[$i]->id}}"><button type="button" class="btn btn-danger">放棄此任務</button></a>
+                  @endif
+                @else
+                  <a href="/activity/get/{{$quests[$i]->id}}"><button type="button" class="btn btn-danger">接下此任務</button></a>
+                @endif
+                <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
     				</div>
    				</div>
 			</div>
@@ -81,12 +91,12 @@
 			<table class="table table-hover table-bordered">
 				<thead>
 					<tr>
-						<th>任務標題</th>
-						<th>發布單位</th>
-						<th>開始時間</th>
-						<th>結束時間</th>
-						<th>獎勵冒險點數</th>
-						<th>薪資</th>
+						<th><a href="{{ url('/activity/orderbytitle') }}">任務標題</a></th>
+						<th><a href="{{ url('/activity/orderbynpc') }}">發布單位</a></th>
+						<th><a href="{{ url('/activity/orderbystart') }}">開始時間</a></th>
+						<th><a href="{{ url('/activity/orderbyend') }}">結束時間</a></th>
+						<th><a href="{{ url('/activity/orderbypoint') }}">獎勵冒險點數</a></th>
+						<th><a href="{{ url('/activity/orderbysalary') }}">薪資</a></th>
 						<th>需要人數</th>
 					</tr>
 				</thead>

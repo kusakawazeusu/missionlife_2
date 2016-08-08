@@ -25,10 +25,10 @@ class dialog_ctrler extends Controller
 	{
 		$id_1 = DB::table('dialog')->where('ordered',$ordered)->value('id');
 		$id_2 = DB::table('dialog')->where('ordered',$ordered-1)->value('id');
-
+		//value('id')取那個tuple的ID
 		DB::table('dialog')->where('id',$id_1)->update(['ordered'=>$ordered-1]);
 		DB::table('dialog')->where('id',$id_2)->update(['ordered'=>$ordered]);
-
+		//作交換
 		$dialogs = DB::table('dialog')->where('ocassion',$ocassion)->orderBy('ordered')->get();
 
 		return redirect()->route('manageDia',['ocassion'=>$ocassion]);
@@ -57,6 +57,7 @@ class dialog_ctrler extends Controller
 		{
 			for($i=1;$i<=$times;$i++)
 				DB::table('dialog')->where('ordered',$ordered+$i)->update(['ordered'=> $ordered+$i-1]);
+			//這個for迴圈要補被刪除的空位
 		}
 		return redirect()->route('manageDia',['ocassion'=>$ocassion]);
 	}

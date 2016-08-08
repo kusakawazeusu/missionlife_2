@@ -13,7 +13,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">場合：{{ $dialogs[$i]->ocassion }}</div>
 			<div class="panel-body">
-					<img class="img-responsive img-rounded center-block" style="height:70px;weight:70px" src="{{ $dialogs[$i]->pic_path }}"</img>
+					<img class="img-responsive img-rounded center-block" style="height:70px;weight:70px" src="{{ $dialogs[$i]->pic_path }}">
 					<br><a href="/diamanage/{{$dialogs[$i]->ocassion}}" class="btn btn-danger btn-sm">管理</a>
 			</div>
 		</div>
