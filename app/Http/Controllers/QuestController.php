@@ -23,7 +23,83 @@ class QuestController extends Controller
         $diff = Carbon::today()->diffInDays(Carbon::create($pieces[0],$pieces[1],$pieces[2],0),false);
         return abs($diff);
     }
+    public function showQuestCommand($quest_id)
+    {
+        $quest_data = DB::table('quest')
+                        ->where('id',$quest_id)
+                        ->first();
 
+        $commands = DB::table('command')
+                        ->where('quest_id',$quest_id)
+                        ->join('users','command.author_id','=','users.id')
+                        ->select('*','command.created_at as created_at')
+                        ->get();
+
+        $workers = DB::table('um')
+                    ->where('quest_id',$quest_id)
+                    ->where('status',1)
+                    ->join('users','um.user_id','=','users.id')
+                    ->get();
+
+        return view('questcommand',['quest'=>$quest_data,'commands'=>$commands,'workers'=>$workers]);
+    }
+    public function storeQuestCommand($quest_id,Request $request)
+    {
+        DB::table('command')
+            ->insert([
+                "quest_id"=>$quest_id,
+                "author_id"=>Auth::user()->id,
+                "author_identity"=>Auth::user()->auth,
+                "context"=>$request['command_text'],
+                "created_at"=>Carbon::now()
+                ]);
+
+            /*
+        $the_users = DB::table('um')
+                        ->where('quest_id',$quest_id)
+                        ->select('user_id')
+                        ->get();
+
+        foreach($the_users as $the_user)
+        {
+        DB::table('message')
+            ->insert([
+                "user_id"=>$the_user,
+                "content"=>"任務有新通知！"
+                ]);
+        }
+            */
+        
+        return redirect()->back();
+    }
+
+    public function pointQuest($quest_id,$user_id)
+    {
+        $the_mission = DB::table('quest')
+                            ->where('id',$quest_id)
+                            ->first();
+
+        if(Auth::user()->name == $the_mission->creator)
+        {
+            $the_relationship = DB::table('um')
+                                    ->where('user_id',$user_id)
+                                    ->where('quest_id',$quest_id)
+                                    ->update(['status'=>1]);
+
+            DB::table('quest')
+                ->where('id',$quest_id)
+                ->update(['activation'=>2]);
+
+           
+
+            DB::table('message')->insert(
+                ['user_id'=>$user_id, 'content'=>"恭喜！你已經通過任務<b>".$the_mission->name."</b>的審核！請稍待NPC下達任務指示！", 'read'=>'0']
+                );
+            
+            return redirect()->back();
+        }
+
+    }
     public function showQuestmanage()
     {
         $now = Carbon::today();
@@ -37,6 +113,7 @@ class QuestController extends Controller
                 $applies[$quests_now[$i]->name] = DB::table('quest')
                                                 ->where('id',$quests_now[$i]->id)
                                                 ->join('um','quest.id','=','um.quest_id')
+                                                ->where('um.status',0)
                                                 ->count();
         }
         else
@@ -52,7 +129,7 @@ class QuestController extends Controller
                     ->join('um','quest.id','=','um.quest_id')
                     ->join('users','um.user_id','=','users.id')
                     ->join('departments','users.department_id','=','departments.id')
-                    ->select('*','quest.name as name','users.name as user_name','users.id as user_id','departments.name as user_department')
+                    ->select('*','quest.name as name','quest.id as quest_id','users.name as user_name','users.id as user_id','departments.name as user_department')
                     ->get();
 
         return view('questtrail',['quests'=>$quests]);

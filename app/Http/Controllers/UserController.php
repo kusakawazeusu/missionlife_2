@@ -16,16 +16,17 @@ class UserController extends Controller
 {
     //
     public function showAccount() {
-        $ums = DB::table('um')->where('user_id',Auth::user()->id)->get();  // 該使用者接的任務的集合
+        $ums = DB::table('um')->where('user_id',Auth::user()->id)->count();  // 該使用者接的任務的集合
 
-        if( count($ums) == 0 )  // 該使用者並未接取任何任務
+        if( $ums == 0 )  // 該使用者並未接取任何任務
         {
-            return view('account',['ums' => $ums,'no_quest'=>'1']);
+            return view('account',['no_quest'=>'1']);
         }
         else
         {
-            $quests = DB::table('quest')
-                    ->join('um','quest.id','=','um.quest_id')
+            $quests = DB::table('um')
+                    ->where('user_id',Auth::user()->id)
+                    ->join('quest','quest.id','=','um.quest_id')
                     ->select('quest.*','um.status')
                     ->get();
 

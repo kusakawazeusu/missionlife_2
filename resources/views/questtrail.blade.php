@@ -77,8 +77,12 @@
                               </div>
                         </div>
                         <div class="modal-footer">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                              <button type="button" class="btn btn-primary">Save changes</button>
+                              <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+                              @if($quests[$i]->status == 0)
+                              <a href="/questmanage/{{ $quests[$i]->quest_id }}/{{ $quests[$i]->user_id }}" class="btn btn-primary">指派任務</a>
+                              @elseif($quests[$i]->status == 1)
+                              <a class="btn btn-primary disabled">已指派任務給該冒險者</a>
+                              @endif
                         </div>
                   </div>
             </div>
@@ -123,10 +127,25 @@
                                     <td>申請者</td>
                                     <td>
                                           @for($i=0;$i<count($quests);$i++)
-                                                <div class="col-md-1 @if($i>0) col-md-offset-1 @endif">
+                                          @if($quests[$i]->status == 0)
+                                                <div tyle="margin-right:10px" class="col-md-1">
                                                       <img class="img user" name="{{$quests[$i]->user_id}}" style="border-top-left-radius:4px;border-top-right-radius:4px;width:50px;height:50px" src="{{asset('personal_img/'.$quests[$i]->picture_path)}}"></img>
                                                       <div class="namae" style="border-bottom-right-radius:4px;border-bottom-left-radius:4px;display:none;width:50px;background-color:#3c76e7"><p class="text-center" style="color:white">{{$quests[$i]->user_name}}</p></div>
                                                 </div>
+                                          @endif
+                                          @endfor
+                                    </td>
+                              </tr>
+                              <tr>
+                                    <td>已指派的冒險者</td>
+                                    <td>
+                                          @for($i=0;$i<count($quests);$i++)
+                                          @if($quests[$i]->status == 1)
+                                                <div style="margin-right:10px" class="col-md-1">
+                                                      <img class="img user" name="{{$quests[$i]->user_id}}" style="border-top-left-radius:4px;border-top-right-radius:4px;width:50px;height:50px" src="{{asset('personal_img/'.$quests[$i]->picture_path)}}"></img>
+                                                      <div class="namae" style="border-bottom-right-radius:4px;border-bottom-left-radius:4px;display:none;width:50px;background-color:#3c76e7"><p class="text-center" style="color:white">{{$quests[$i]->user_name}}</p></div>
+                                                </div>
+                                          @endif
                                           @endfor
                                     </td>
                               </tr>
@@ -134,7 +153,8 @@
                   </div>
                   <div class="panel-footer">
                         <div class="text-right">
-                              <a class="btn btn-primary">修改任務</a>
+                              <a class="btn btn-primary"><i class="icon-pencil"> 修改任務</i></a>
+                              <a href="/questcommand/{{ $quests[0]->quest_id }}" class="btn btn-danger"><i class="icon-sitemap"> 下達任務指示</i></a>
                         </div>
                   </div>
             </div>

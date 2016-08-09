@@ -21,7 +21,7 @@
 
   <style type="text/css">
 
-  #trail_text {
+  .trail_text {
      display:none;
      position:absolute;
      background-color: #3871E1;
@@ -30,7 +30,7 @@
      box-shadow: 2px 2px 5px grey;
   }
 
-  #trail_text > p {
+  .trail_text > p {
     color: white;
     margin: 15px 15px 15px 15px;
   }
@@ -41,11 +41,11 @@
   <script>
     $(document).ready(function(){
 
-      $('#trail').hover(function(){
-        $('#trail_text').fadeIn();
+      $('.trail').hover(function(){
+        $(this).next().fadeIn();
       });
-      $('#trail').mouseleave(function(){
-        $('#trail_text').fadeOut();
+      $('.trail').mouseleave(function(){
+        $(this).next().fadeOut();
       });
 
     });
@@ -123,36 +123,38 @@
 						<h3>道具欄</h3>
 					</div>
 					<div id="m4" class="tab-pane fade">
-						@if( $no_quest == 0 )
-						<h3>進行中任務</h3>
-						<table class="table table-hover table-bordered">
-							<thead>
-							<tr>
-								<th>任務標題</th>
+						@if( $no_quest == 1 )
+            <h3>目前尚無進行中任務，趕快踏出你的第一步吧！</h3>
+						@elseif($no_quest == 0)
+            <h3>進行中任務</h3>
+            <table class="table table-hover table-bordered">
+              <thead>
+              <tr>
+                <th>任務標題</th>
                 <th>任務狀態</th>
-								<th>發布單位</th>
-								<th>開始時間</th>
-								<th>結束時間</th>
-								<th>獎勵冒險點數</th>
-								<th>薪資</th>
-								<th>需要人數</th>
-							</tr>
-							</thead>
-						<tbody>
-  							@for($i=0; $i < count($quests); $i++)
-  							<tr>
-  								<td>{{ $quests[$i]->name }}</td>
+                <th>發布單位</th>
+                <th>開始時間</th>
+                <th>結束時間</th>
+                <th>獎勵冒險點數</th>
+                <th>薪資</th>
+                <th>指示</th>
+              </tr>
+              </thead>
+            <tbody>
+                @for($i=0; $i < count($quests); $i++)
+                <tr>
+                  <td>{{ $quests[$i]->name }}</td>
                   <td>
                     @if($quests[$i]->status == '0')
                       審核中
-                      <i id="trail" class="icon-question-sign icon-large"></i>
-                      <div id="trail_text">
+                      <i class="icon-question-sign icon-large trail"></i>
+                      <div class="trail_text">
                         <p><b>小提示：</b><br>這個任務正在被NPC審核中，無論審核是否通過，你都可以在審核完成後知道結果。</p>
                       </div>
                     @elseif($quests[$i]->status == '1')
                       進行中
-                      <i id="trail" class="icon-question-sign icon-large"></i>
-                      <div id="trail_text">
+                      <i class="icon-question-sign icon-large trail"></i>
+                      <div class="trail_text">
                         <p><b>小提示：</b><br>你正在執行這個任務！確認一下NPC給你的指示，幹勁十足地完成它吧！有遇到任何問題，可以詢問NPC唷！</p>
                       </div>
                     @elseif($quests[$i]->status == '2')
@@ -160,21 +162,17 @@
                     @elseif($quests[$i]->status == '3')
                       ㄏㄏ
                     @endif
-
                   </td>
-  								<td>{{ $quests[$i]->creator }}</td>
-  								<td>{{ $quests[$i]->start_at }}</td>
-  								<td>{{ $quests[$i]->end_at }}</td>
-  								<td>{{ $quests[$i]->point }}</td>
-  								<td>{{ $quests[$i]->salary }}</td>
-  								<td>{{ $quests[$i]->workforce }}</td>
-
-  							</tr>
-							@endfor
-						</tbody>
-						</table>
-						@else
-						<h3>目前尚無進行中任務，趕快踏出你的第一步吧！</h3>
+                  <td>{{ $quests[$i]->creator }}</td>
+                  <td>{{ $quests[$i]->start_at }}</td>
+                  <td>{{ $quests[$i]->end_at }}</td>
+                  <td>{{ $quests[$i]->point }}</td>
+                  <td>{{ $quests[$i]->salary }}</td>
+                  <td><a href="/questcommand/{{$quests[$i]->id}}"<i class="icon-sitemap"></i></a></td>
+                </tr>
+              @endfor
+            </tbody>
+            </table>
 						@endif
 					</div>
 					
