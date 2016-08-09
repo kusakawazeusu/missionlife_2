@@ -15,6 +15,7 @@
 .navbar-default .navbar-nav > li > a {
   color: #ecf0f1;
 }
+
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   background-color: #3871E1;
@@ -26,14 +27,16 @@
 
 .navbar-default .navbar-nav > li > .dropdown-menu > li > a {
   color: #000000;
-      word-wrap: break-word;
-    white-space: normal;
+  word-wrap: break-word;
+  white-space: normal;
 }
+
 .navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
 .navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
   color: #ecf0f1;
   background-color: #1863ab;
 }
+
 .navbar-default .navbar-nav > li > .dropdown-menu > li > .divider {
   background-color: #1863ab;
 }
