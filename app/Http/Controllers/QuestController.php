@@ -7,6 +7,7 @@ use App\Quest;
 use App\Http\Requests;
 use Auth;
 use DB;
+use Carbon\Carbon;
 
 class QuestController extends Controller
 {
@@ -16,6 +17,46 @@ class QuestController extends Controller
     	$this->middleware('auth');
 	}
     //
+    public function howfar($date)
+    {
+        $pieces = explode("-",$date);
+        $diff = Carbon::today()->diffInDays(Carbon::create($pieces[0],$pieces[1],$pieces[2],0),false);
+        return abs($diff);
+    }
+
+    public function showQuestmanage()
+    {
+        $now = Carbon::today();
+        $quests_now = DB::table('quest')->where('creator',Auth::user()->name)->where('start_at','<=',$now)->get();
+        $quests_before = DB::table('quest')->where('creator',Auth::user()->name)->where('start_at','>',$now)->get();
+        $quests_finished = DB::table('quest')->where('creator',Auth::user()->name)->where('activation',0)->get();
+
+        if(count($quests_now))
+        {
+            for($i=0;$i<count($quests_now);$i++)
+                $applies[$quests_now[$i]->name] = DB::table('quest')
+                                                ->where('id',$quests_now[$i]->id)
+                                                ->join('um','quest.id','=','um.quest_id')
+                                                ->count();
+        }
+        else
+        {
+            $applies = 0;
+        }
+        return view('questmanage',['quests_now'=>$quests_now,'quests_before'=>$quests_before,'quests_finished'=>$quests_finished,'applies'=>$applies]);
+    }
+    public function showTrail($id)
+    {
+        $quests = DB::table('quest')
+                    ->where('quest.id',$id)
+                    ->join('um','quest.id','=','um.quest_id')
+                    ->join('users','um.user_id','=','users.id')
+                    ->join('departments','users.department_id','=','departments.id')
+                    ->select('*','quest.name as name','users.name as user_name','users.id as user_id','departments.name as user_department')
+                    ->get();
+
+        return view('questtrail',['quests'=>$quests]);
+    }
     public function showNewquest()
     {
         return view('newquest');

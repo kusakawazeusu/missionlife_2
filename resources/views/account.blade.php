@@ -18,6 +18,41 @@
 			唔喔！還沒完成「認證」的話，無法使用完整的Mission Life喔！點擊<a href="{{ url('/active') }}">這裡</a>完成認證吧！
 		</div>
 	@else
+
+  <style type="text/css">
+
+  #trail_text {
+     display:none;
+     position:absolute;
+     background-color: #3871E1;
+     border-radius: 5px;
+     max-width: 400px;
+     box-shadow: 2px 2px 5px grey;
+  }
+
+  #trail_text > p {
+    color: white;
+    margin: 15px 15px 15px 15px;
+  }
+
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script>
+    $(document).ready(function(){
+
+      $('#trail').hover(function(){
+        $('#trail_text').fadeIn();
+      });
+      $('#trail').mouseleave(function(){
+        $('#trail_text').fadeOut();
+      });
+
+    });
+
+  </script>
+
+
 		<div class="container">
 			<ol class="breadcrumb">
 				<li><a href="{{ url('/') }}">首頁</a></li>
@@ -70,8 +105,8 @@
 							<h4>聲望：{{ Auth::user()->fame }}</h4>
 							<div class="row">
 								<div class="col-xs-6 col-sm-5 col-md-4">
-								<a href="#" class="btn btn-info btn-block" data-toggle="modal" data-target="#myModal" role="button"><i class="icon-pencil"> 修改個人資料</i></a>
-                                <a href="{{url('/account/change_pwd')}}" class="btn btn-info btn-block" role="button"><i class="icon-lock"> 修改密碼</i></a>
+  								<a href="#" class="btn btn-info btn-block" data-toggle="modal" data-target="#myModal" role="button"><i class="icon-pencil"> 修改個人資料</i></a>
+                  <a href="{{url('/account/change_pwd')}}" class="btn btn-info btn-block" role="button"><i class="icon-lock"> 修改密碼</i></a>
 								</div>
 							</div>
 							
@@ -94,36 +129,46 @@
 							<thead>
 							<tr>
 								<th>任務標題</th>
+                <th>任務狀態</th>
 								<th>發布單位</th>
 								<th>開始時間</th>
 								<th>結束時間</th>
 								<th>獎勵冒險點數</th>
 								<th>薪資</th>
 								<th>需要人數</th>
-								<th>任務狀態</th>
 							</tr>
 							</thead>
 						<tbody>
   							@for($i=0; $i < count($quests); $i++)
   							<tr>
   								<td>{{ $quests[$i]->name }}</td>
+                  <td>
+                    @if($quests[$i]->status == '0')
+                      審核中
+                      <i id="trail" class="icon-question-sign icon-large"></i>
+                      <div id="trail_text">
+                        <p><b>小提示：</b><br>這個任務正在被NPC審核中，無論審核是否通過，你都可以在審核完成後知道結果。</p>
+                      </div>
+                    @elseif($quests[$i]->status == '1')
+                      進行中
+                      <i id="trail" class="icon-question-sign icon-large"></i>
+                      <div id="trail_text">
+                        <p><b>小提示：</b><br>你正在執行這個任務！確認一下NPC給你的指示，幹勁十足地完成它吧！有遇到任何問題，可以詢問NPC唷！</p>
+                      </div>
+                    @elseif($quests[$i]->status == '2')
+                      已完成
+                    @elseif($quests[$i]->status == '3')
+                      ㄏㄏ
+                    @endif
+
+                  </td>
   								<td>{{ $quests[$i]->creator }}</td>
   								<td>{{ $quests[$i]->start_at }}</td>
   								<td>{{ $quests[$i]->end_at }}</td>
   								<td>{{ $quests[$i]->point }}</td>
   								<td>{{ $quests[$i]->salary }}</td>
   								<td>{{ $quests[$i]->workforce }}</td>
-  								<td>
-  									@if($quests[$i]->status == '0')
-  										審核中
-  									@elseif($quests[$i]->status == '1')
-  										進行中
-  									@elseif($quests[$i]->status == '2')
-  										已完成
-  									@elseif($quests[$i]->status == '3')
-  										ㄏㄏ
-  									@endif
-  								</td>
+
   							</tr>
 							@endfor
 						</tbody>

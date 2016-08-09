@@ -60,6 +60,7 @@
 <script>
     $(document).ready(function(){
 
+
         $("#icon > var").text({{ $read }});
 
         $('#myDropdown').on('show.bs.dropdown', function () {
@@ -68,7 +69,6 @@
 
         $('#myDropdown').on('hide.bs.dropdown', function () {
             $(this).find('.dropdown-menu').first().slideUp(function(){
-                //window.location.href = '/update';
                 $(document).load("/update");
                 $("#icon > var").css("display","none");
             });

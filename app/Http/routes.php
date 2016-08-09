@@ -18,6 +18,9 @@ Route::get('/', function () {
     return view('index',['dialogs' => $dialogs]);
 });
 
+// 回報距離日期
+Route::get('/howfar/{date}','QuestController@howfar');
+
 // 更新「近期通知」的function
 Route::get('/update','message@update');
 
@@ -35,6 +38,10 @@ Route::get('/newdia','mission@create');
 // NPC增加新任務
 Route::get('/newquest','QuestController@showNewquest');
 Route::post('/newquest','QuestController@store');
+
+// NPC管理任務
+Route::get('/questmanage','QuestController@showQuestmanage');
+Route::get('/questmanage/{id}','QuestController@showTrail');
 
 // 使用者資料
 Route::get('/account','UserController@showAccount');
