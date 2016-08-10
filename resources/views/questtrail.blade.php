@@ -32,7 +32,7 @@
 
       </script>
 
-      @for($i=0;$i<count($quests);$i++)
+      @for($i=0;$i<count($quests);$i++) <!-- modal的數量 -->
       <div class="modal fade" id="users_{{$quests[$i]->user_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -126,6 +126,7 @@
                               <tr>
                                     <td>申請者</td>
                                     <td>
+                                          <!-- 個人圖案程式碼 -->
                                           @for($i=0;$i<count($quests);$i++)
                                           @if($quests[$i]->status == 0)
                                                 <div tyle="margin-right:10px" class="col-md-1">
@@ -153,9 +154,11 @@
                   </div>
                   <div class="panel-footer">
                         <div class="text-right">
-                              <a class="btn btn-primary"><i class="icon-pencil"> 修改任務</i></a>
-                              <a href="/questcommand/{{ $quests[0]->quest_id }}" class="btn btn-danger"><i class="icon-sitemap"> 下達任務指示</i></a>
+                              <a class="btn btn-primary" href="{{url('/questmanage/'.$quests[0]->quest_id.'/update')}}" role="button"><i class="icon-pencil"> 修改任務</i></a><span>&nbsp&nbsp&nbsp</span>
+                              <a href="/questcommand/{{ $quests[0]->quest_id }}" class="btn btn-danger"><i class="icon-sitemap"> 下達任務指示</i></a><span>&nbsp&nbsp&nbsp</span>
+                              <a class="btn btn-success" href="{{url('/questmanage')}}" role="button">返回</a>
                         </div>
+
                   </div>
             </div>
       </div>
