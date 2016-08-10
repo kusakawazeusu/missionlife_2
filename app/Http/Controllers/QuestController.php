@@ -122,6 +122,37 @@ class QuestController extends Controller
         }
         return view('questmanage',['quests_now'=>$quests_now,'quests_before'=>$quests_before,'quests_finished'=>$quests_finished,'applies'=>$applies]);
     }
+    public function showQuestUpdate($id){
+        $quest = Quest::find($id);
+        return view('quest_update',['quest'=>$quest]);
+    }
+    public function quest_update(Request $request,$id){
+        $messages = [
+            'required' => '這個欄位是必填的！',
+            'integer' => '必須是整數！',
+            'min' => '須大於:min！',
+            'after_equal'=>'必須在報名開始日期(含)之後！',
+        ];
+
+        $this->validate($request,[
+            'title'=>'required',
+            'start_date'=>'required',
+            'end_date'=>'required|after_equal:start_date',
+            'salary'=>'required|integer|min:120',
+            'workforce'=>'required|integer|min:1',
+            ],$messages);
+        
+        $quest = Quest::find($id);
+        $quest->name = $request->title;
+        $quest->start_at = $request->start_date;
+        $quest->end_at = $request->end_date;
+        $quest->description = $request->description;
+        $quest->salary = $request->salary;
+        $quest->workforce = $request->workforce;//人數
+        $quest->save();
+        
+        return redirect('/questmanage/'.$id);
+    }
     public function showTrail($id)
     {
         $quests = DB::table('quest')
