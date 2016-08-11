@@ -43,6 +43,10 @@ Route::post('/newquest','QuestController@store');
 Route::get('/questmanage','QuestController@showQuestmanage');
 Route::get('/questmanage/{id}','QuestController@showTrail');
 
+// NPC修改任務
+Route::get('/questmanage/{id}/update','QuestController@showQuestUpdate');
+Route::post('/questmanage/{id}/update','QuestController@quest_update');
+
 // NPC指派任務給使用者
 Route::get('/questmanage/{quest_id}/{user_id}','QuestController@pointQuest');
 
