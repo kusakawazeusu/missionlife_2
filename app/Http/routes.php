@@ -83,6 +83,8 @@ Route::get('/activity/cancel/{id}','UmController@cancelactivity');
 Route::get('/conf','QuestController@showConf');
 Route::get('/conf/get/{id}','UmController@getconf');
 Route::get('/conf/cancel/{id}','UmController@cancelconf');
+Route::get('/confQRcode/{id}','QuestController@confQRcode_generate');
+Route::get('/checkconf/{id}','UmController@checkconf');
 
 Route::get('/active', function () {
 	$users = DB::table('users')->get();

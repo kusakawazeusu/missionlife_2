@@ -10,7 +10,8 @@
         "guzzlehttp/guzzle": "~6.2",
         "fzaninotto/faker": "^1.6",
         "nesbot/carbon": "^1.21",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "simplesoftwareio/simple-qrcode": "~1"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",

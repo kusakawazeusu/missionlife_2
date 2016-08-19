@@ -37,6 +37,7 @@
                                     <thead>
                                           <tr>
                                                 <th>任務標題</th>
+                                                <th>任務類別</th>
                                                 <th>發布單位</th>
                                                 <th>開始時間</th>
                                                 <th>結束時間</th>
@@ -47,6 +48,13 @@
                                     @for($i=0; $i < count($quests_before); $i++)
                                           <tr>
                                                 <td>{{ $quests_before[$i]->name }}</td>
+                                                @if($quests_before[$i]->catalog==0)
+                                                      <td>工讀</td>
+                                                @elseif($quests_before[$i]->catalog==1)
+                                                      <td>活動</td>
+                                                @else
+                                                      <td>講座</td>
+                                                @endif
                                                 <td>{{ $quests_before[$i]->creator }}</td>
                                                 <td>{{ $quests_before[$i]->start_at }}（還有<b name="{{ $quests_before[$i]->start_at }}" class="day"></b>天）</td>
                                                 <td>{{ $quests_before[$i]->end_at }}（還有<b name="{{ $quests_before[$i]->end_at }}" class="day"></b>天）</td>
@@ -64,6 +72,7 @@
                                     <thead>
                                           <tr>
                                                 <th>任務標題</th>
+                                                <th>任務類別</th>
                                                 <th>發布單位</th>
                                                 <th>開始時間</th>
                                                 <th>結束時間</th>
@@ -76,12 +85,25 @@
                                           @for($i=0; $i < count($quests_now); $i++)
                                                 <tr>
                                                       <td>{{ $quests_now[$i]->name }}</td>
+                                                      @if($quests_now[$i]->catalog==0)
+                                                            <td>工讀</td>
+                                                      @elseif($quests_now[$i]->catalog==1)
+                                                            <td>活動</td>
+                                                      @else
+                                                            <td>講座</td>
+                                                      @endif
                                                       <td>{{ $quests_now[$i]->creator }}</td>
                                                       <td>{{ $quests_now[$i]->start_at }}（已進行<b name="{{ $quests_now[$i]->start_at }}" class="day"></b>天）</td>
                                                       <td>{{ $quests_now[$i]->end_at }}（還有<b name="{{ $quests_now[$i]->end_at }}" class="day"></b>天）</td>
                                                       <td>{{ $quests_now[$i]->workforce }}</td>
                                                       <td>{{ $applies[$quests_now[$i]->name] }}</td>
-                                                      <td class="text-center"><a href="/questmanage/{{$quests_now[$i]->id}}"><i class="icon-check icon-large"></i></a></td>
+                                                      @if($quests_now[$i]->catalog==0)
+                                                            <td class="text-center"><a href="/questmanage/{{$quests_now[$i]->id}}"><i class="icon-check icon-large"></i></a></td>
+                                                      @elseif($quests_now[$i]->catalog==1)
+                                                            <td class="text-center"><a href="/questmanage/{{$quests_now[$i]->id}}"><i class="icon-check icon-large"></i></a></td>
+                                                      @else
+                                                            <td class="text-center"><a href="/confQRcode/{{$quests_now[$i]->id}}"><i class="icon-check icon-large"></i></a></td>
+                                                      @endif
                                                 </tr>
                                           @endfor
                                     </tbody>
@@ -95,6 +117,7 @@
                                     <thead>
                                           <tr>
                                                 <th>任務標題</th>
+                                                <th>任務類別</th>
                                                 <th>發布單位</th>
                                                 <th>開始時間</th>
                                                 <th>結束時間</th>
@@ -107,6 +130,13 @@
                                           @for($i=0; $i < count($quests_finished); $i++)
                                                 <tr>
                                                       <td>{{ $quests_finished[$i]->name }}</td>
+                                                      @if($quests_finished[$i]->catalog==0)
+                                                            <td>工讀</td>
+                                                      @elseif($quests_finished[$i]->catalog==1)
+                                                            <td>活動</td>
+                                                      @else
+                                                            <td>講座</td>
+                                                      @endif
                                                       <td>{{ $quests_finished[$i]->creator }}</td>
                                                       <td>{{ $quests_finished[$i]->start_at }}</td>
                                                       <td>{{ $quests_finished[$i]->end_at }}</td>

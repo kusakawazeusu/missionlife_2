@@ -192,6 +192,11 @@ class QuestController extends Controller
         $ums = DB::table('um')->where('user_id',Auth::user()->id)->get();
         return view('conf',['quests' => $quests, 'ums' => $ums]);
     }
+    public function confQRcode_generate($id){
+        $quest = DB::table('quest')->where('id',$id)->get();
+        $url = url('checkconf',$id);
+        return view('confQRcode',['url'=>$url,'quest'=>$quest]);
+    }
 
     public function store(Request $request)
     {

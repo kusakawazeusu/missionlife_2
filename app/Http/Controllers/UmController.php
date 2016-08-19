@@ -82,4 +82,14 @@ class UmController extends Controller
     	DB::table('um')->where('user_id', Auth::user()->id)->where('quest_id', $id)->delete();
     	return redirect('/conf');
     }
+    public function checkconf($id)
+    {
+        if(DB::table('um')->where('user_id', Auth::user()->id)->where('quest_id', $id)->value('status')==0){
+            $point = DB::table('users')->where('id',Auth::user()->id)->value('point');
+            $fame = DB::table('users')->where('id',Auth::user()->id)->value('fame');
+            DB::table('users')->where('id',Auth::user()->id)->update(['point'=>$point+10,'fame'=>$fame+1]);
+            DB::table('um')->where('user_id', Auth::user()->id)->where('quest_id', $id)->update(['status'=>1,'finish_at'=>Carbon::today()]);
+        }
+        return redirect('/');
+    }
 }
