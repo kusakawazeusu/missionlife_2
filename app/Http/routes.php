@@ -11,6 +11,11 @@
 |
 */
 
+// 成就系統測試中
+Route::get('/ac', function () {
+    return view('achieve');
+});
+
 // 首頁
 Route::get('/', function () {
     $dialogs = DB::table('dialog')->where('ocassion','first_time')->get();

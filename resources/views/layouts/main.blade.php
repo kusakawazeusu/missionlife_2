@@ -21,6 +21,7 @@
     <!-- Custom CSS -->
     <style>
     body {
+        font-family: 'Noto Sans TC', sans-serif;
         padding-top: 30px;
         /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
     }
@@ -38,6 +39,18 @@
       padding:3px 3px;
       background: red; color: white;
       border-radius:3px;
+    }
+
+
+    .achieve {
+        display:none;
+        top: 60%;
+        left: 30%;
+        position: absolute;
+        height:10%;
+        width:40%;
+        background-color:#3c76e7;
+        border-radius: 15px;
     }
 
     </style>
@@ -60,6 +73,9 @@
 <script>
     $(document).ready(function(){
 
+        $(document).ready(function(){
+            //$('.achieve').delay(2000).fadeIn().delay(5000).fadeOut();
+        });
 
         $("#icon > var").text({{ $read }});
 
@@ -76,6 +92,9 @@
         });
     });
 </script>
+
+
+    <div class="achieve"></div>
 
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -200,6 +219,8 @@
     @section('dialog')
     <h1 class="text-center">對話框顯示區</h1>
     @show
+
+
 
 
     <!-- /.container -->

@@ -16,6 +16,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\SomeEvent' => [
             'App\Listeners\EventListener',
         ],
+
+        'App\Events\Purchased' => [
+            'App\Listeners\Confirmation',
+        ],
     ];
 
     /**
