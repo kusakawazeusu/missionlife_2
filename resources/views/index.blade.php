@@ -52,7 +52,7 @@ html {
 }
 
 #page2 {
-	background-color: #3c76e7;
+	background-color: #eee;
 }
 
 </style>
