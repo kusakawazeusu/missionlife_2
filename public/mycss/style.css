@@ -1,6 +1,17 @@
 /*
 * Noto Sans TC (Chinese_traditional) http://www.google.com/fonts/earlyaccess
  */
+
+body {
+    width: 100%;
+    height: 100%;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
 @font-face {
   font-family: 'Noto Sans TC';
   font-style: normal;
