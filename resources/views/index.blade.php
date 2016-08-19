@@ -29,10 +29,20 @@
 
 <style>
 
+body {
+    width: 100%;
+    height: 100%;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
 .page-section {
 	width:100%;
-	min-height: 800px;
-	padding:50px 0;
+	height: 100%;
+
 	border-bottom: 10px solid #fff;
 }
 
@@ -54,7 +64,7 @@
 			<div style="display:none" id="welcome2" class="row">
 				<div class="col-md-4">
 					<div class="panel panel-default">
-						<div style="color:#ecf0f1; background-color:#3c76e7" class="panel-heading">
+						<div style="color:#ecf0f1; background-color:#3c76e7;max-height:150px" class="panel-heading">
 							<h3 class="text-center"><i class="icon-quote-left"></i> 讓大學生活更精采 <i class="icon-quote-right"></i></h3>
 						</div>
 						<div class="panel-body">
@@ -65,7 +75,7 @@
 
 				<div class="col-md-4">
 					<div class="panel panel-default">
-						<div style="color:#ecf0f1; background-color:#3c76e7" class="panel-heading">
+						<div style="color:#ecf0f1; background-color:#3c76e7;max-height:150px" class="panel-heading">
 							<h3 class="text-center"><i class="icon-quote-left"></i> 校園解謎遊戲 <i class="icon-quote-right"></i></h3>
 						</div>
 						<div class="panel-body">
@@ -75,7 +85,7 @@
 				</div>
 				<div class="col-md-4">
 					<div class="panel panel-default">
-						<div style="color:#ecf0f1; background-color:#3c76e7" class="panel-heading">
+						<div style="color:#ecf0f1; background-color:#3c76e7;max-height:150px" class="panel-heading">
 							<h3 class="text-center"><i class="icon-quote-left"></i> 提供社團一個活動平台 <i class="icon-quote-right"></i></h3>
 						</div>
 						<div class="panel-body">
@@ -84,7 +94,7 @@
 					</div>
 				</div>
 				<div style="height:80px" class="col-md-4 col-md-offset-4">
-						<a data-id="page2" style="background-color:#3c76e7;font-size:24px;height:100%; width:100%" class="btn btn-primary scroll-link">立刻加入！</a>
+						<button data-id="page2" style="background-color:#3c76e7;font-size:24px;height:100%; width:100%" class="btn btn-primary scroll-link">立刻加入！</button>
 				</div>
 			</div>
 		</div>
