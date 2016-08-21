@@ -19,11 +19,12 @@
 		</div>
 	@else
     <?php $cou = 1; ?>
+    <!-- cou用在任務需求編號 -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <script>
-      //jquery here
+      //jquery here 拿來控制通知視窗
       $(document).ready(function(){
 
         @if(session()->has('action'))
@@ -31,21 +32,30 @@
             $("#suc").fadeIn().delay(2000).animate({left:'-=400px',opacity:'0'},"slow");
           @elseif ( session('action') == 'failed' )
             $("#fail").fadeIn().delay(2000).animate({left:'-=400px',opacity:'0'},"slow");
+          @elseif(session('action') == 'search_work_not_found')
+            $("#not_found").fadeIn().delay(2000).animate({left:'-=400px',opacity:'0'},"slow");
           @endif
         @endif
 
       });
     </script>
 
-    <div style="position:absolute;display:none;" id="suc" class="col-md-3">
+    <div style="position:absolute;display:none;z-index:1" id="suc" class="col-md-3">
       <div class="alert alert-info">
         <i class="icon-thumbs-up icon-large"></i> 任務接取成功，請稍候審核！
       </div>
     </div>
 
-    <div style="position:absolute;display:none;" id="fail" class="col-md-3">
+    <div style="position:absolute;display:none;z-index:1" id="fail" class="col-md-3">
+    <!-- 加了搜索任務按鈕後發現通知訊息會被breadcrumb連結蓋掉 因此加了z-index移到上層-->
       <div class="alert alert-danger">
         <i class="icon-frown icon-large"></i> 任務接取失敗！
+      </div>
+    </div>
+
+    <div style="position:absolute;display:none;z-index:1" id="not_found" class="col-md-3">
+      <div class="alert alert-danger">
+        <i class="icon-question icon-large"></i> 找不到任務！
       </div>
     </div>
 
@@ -84,7 +94,7 @@
                     <td>
 
                       @for($j=0;$j<count($mission_require);$j++)
-                        @if( $quests[$i]->id == $mission_require[$j]->mission_id && $mission_require[$j]->require_catalog != 'custom' )
+                        @if( $quests[$i]->id == $mission_require[$j]->mission_id && $mission_require[$j]->require_catalog != 'custom' ) <!-- custom是自訂義的意思? -->
                           {{ $cou++ }}.{{ $mission_require[$j]->require_catalog }} : {{ $mission_require[$j]->require_parameter }}<br>
                         @elseif( $quests[$i]->id == $mission_require[$j]->mission_id && $mission_require[$j]->require_catalog == 'custom' )
                           {{ $cou++ }}.{{ $mission_require[$j]->require_parameter }}<br>
@@ -128,11 +138,18 @@
 		@endfor
 
 		<div class="container">
-			<ol class="breadcrumb">
-				<li><a href="{{ url('/') }}">首頁</a></li>
-				<li><a href="{{ url('/quest') }}">任務大廳</a></li>
-				<li class="active">工讀任務</li>
-			</ol>
+    <div class="row">
+      <div class="col-sm-10">
+        <ol class="breadcrumb">
+        <li><a href="{{ url('/') }}">首頁</a></li>
+        <li><a href="{{ url('/quest') }}">任務大廳</a></li>
+        <li class="active">工讀任務</li>
+        </ol>
+      </div>
+      <div class="col-sm-2">
+        <a class="btn btn-success btn-block" href="{{url('/work/search')}}" role="button">搜尋任務</a>
+      </div>
+    </div>
 
 			<table class="table table-hover table-bordered">
 				<thead>
@@ -160,10 +177,6 @@
 				@endfor
 				</tbody>
 			</table>
-
-  			
-
-			
 
 		</div>
 

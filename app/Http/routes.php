@@ -73,6 +73,8 @@ Route::get('/quest','QuestController@showQuestlobby');
 Route::get('/work',['as'=>'work','uses'=>'QuestController@showWork']);  // 顯示
 Route::get('/work/get/{id}','UmController@getwork');  // 接取
 Route::get('/work/cancel/{id}','UmController@cancelwork');  // 取消
+Route::get('/work/search','QuestController@showSearchWork');//顯示搜索頁面
+Route::get('/work/search/result','QuestController@SearchWorkResult');//顯示搜索結果
 
 // 「活動」介面
 Route::get('/activity','QuestController@showActivity');
