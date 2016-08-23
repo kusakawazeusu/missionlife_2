@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Quest;
 use App\Http\Requests;
 use Auth;
@@ -174,12 +175,25 @@ class QuestController extends Controller
     {
         return view('quest');
     }
-    public function showWork()
+    public function showWork(Request $request)
     {
-        $quests = DB::table('quest')->where('catalog','0')->get();  // 從資料庫抓取工讀資料
+        // $quests = DB::table('quest')->where('catalog','0')->get();  // 從資料庫抓取工讀資料
+        // if ($request->page === '3') {
+        //     return $request->all();
+        // }
+        $quests = DB::table('quest')->where('catalog','0')->paginate(10);
+        // if (isset($quests)) {
+        //     return $quests->currentPage();
+        // }
+        // if ($quests instanceof LengthAwarePaginator){
+        //     return 'yes';
+        // }else{
+        //     return 'no';
+        // }
         $mission_require = DB::table('mission_require')->get();  // 從資料庫抓取工讀條件
         $ums = DB::table('um')->where('user_id',Auth::user()->id)->get();  // 從資料庫抓取使用者-工讀資料
         return view('work',['quests' => $quests, 'ums' => $ums, 'mission_require' => $mission_require]);
+
     }
     public function showActivity()
     {

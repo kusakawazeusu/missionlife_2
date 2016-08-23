@@ -150,7 +150,8 @@
         <a class="btn btn-success btn-block" href="{{url('/work/search')}}" role="button">搜尋任務</a>
       </div>
     </div>
-
+    
+    {{ $quests->links() }}
 			<table class="table table-hover table-bordered">
 				<thead>
 					<tr>
@@ -177,7 +178,25 @@
 				@endfor
 				</tbody>
 			</table>
-
+      {{ $quests->links() }}
+      
+      
+      <!-- 
+      打上$quests->appends(['var'=>'1'])->links()會將var傳回controller 只是不知道該怎麼把quests傳回去controller
+      打上$quests->fragment('yes')->links() 會使新頁面直接導引到id為yes的地方
+      <h1>no~</h1>
+      <h1>no~</h1>
+      <h1>no~</h1>
+      <h1>no~</h1>
+      <h1>no~</h1>
+      <h1>no~</h1>
+      <h1>no~</h1>
+      <h1>no~</h1>
+      <h1>no~</h1>
+      <h1>no~</h1>
+      <h1>no~</h1>
+      <h1>no~</h1>
+      <h1 id="yes">yes~</h1> -->
 		</div>
 
 	@endif
