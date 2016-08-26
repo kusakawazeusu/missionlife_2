@@ -298,6 +298,7 @@ class QuestController extends Controller
         return view('search_work');
     }
     public function SearchWorkResult(Request $request){
+        $item_per_page = 10;//一個paginate連結要顯示幾個quest
 
         $messages = [
             // 'point.required_with' => '兩個欄位必需同時填入！',
@@ -327,17 +328,12 @@ class QuestController extends Controller
         // echo "點數     = ".$request->point.'~'.$request->point_2.'<br>';
         // echo "page = ".$request->page.'<br>';
 
-                // test pagination
-        // $search_pattern = '%'.$request->description.'%';
-        // $quests=Quest::where('description','like',$search_pattern)->paginate(10);
-                // return $quests->count(); 10
-        // $quests->lastPage();
-        // return view('search_work_result',['quests'=>$quests]);  
-// if ($request->page == 0) {
+    if (!($request->has('page'))) {
         $quests = Quest::where('catalog',0)->get();
+        // return $quests->count();
         if ($quests->isEmpty()) {
-                return redirect()->route('work')->with('action','search_work_not_found');
-            }
+            return redirect()->route('work')->with('action','search_work_not_found');
+        }
 
         if($request->has('title')){
             /*$search_pattern = '%'.$request->title.'%';
@@ -468,11 +464,6 @@ class QuestController extends Controller
             //     $quests=Quest::where('description','like',$search_pattern)->get();
             //     // $quests = $quests->forPage($_GET['page'],10);
             //     // return view('search_work_result',['quests'=>$quests]);
-                
-            //     // test pagination
-            //     // $quests=Quest::where('description','like',$search_pattern)->paginate(10);
-            //     // return $quests->count(); 10
-            //     // return view('search_work_result',['quests'=>$quests]);             
 
             //     echo('description之前都沒輸入<br>');
             //     if ($quests->isEmpty()) {
@@ -526,29 +517,99 @@ class QuestController extends Controller
             // echo ("點數空白"."<br>");
         }
 
-        // $quests = $quests->forPage(4,10); //forPage拿來做pagination用的 不過目前遇到瓶頸..
         $quests = $quests->values();
-        //values()是拿來將collection reindex，因為之前的filter會造成index不連續
+        // values()是拿來將collection reindex，因為之前的filter會造成index不連續
+    }//if(!($request->has('page')))
+    else{//會進入這個else是點選pagination會進來這區塊 從session讀quest的id
+        $quests = Quest::find($request->session()->get('search_result'));
+        //上面回傳的已經不需要reindex
+        // return $request->session()->all();
+    }
+        
+        // for ($i = 0; $i < $quests->count(); $i++) {
+        //     echo '<span style="color:red">id</span> = '.$quests[$i]->id."<br>";
+        //     // $request->session()->push('search_result.id'.$i,$quests[$i]->id.'');
+        // }
+
+        // $request->session()->put('search_result',['10','11']);
+        /*foreach ($quests as $quest) {
+            echo '<span style="color:red">id</span> = '.$quest->id."<br>";
+            $request->session()->push('search_result.id'.'')
+        }*/
+        // $request->session()->push('search_result','13');
+
+        // echo $request->session()->get('search_result')[0];
+        // echo $request->session()->get('search_result')[1];
+        // echo $request->session()->get('search_result')[2];
+        // echo implode(" ",$request->session()->get('search_result'));
+        // $search_result = ['0','1','2'];
+        // $request->session()->flash("search_result" , $search_result);
+        // return $request->session()->all();
+        // return '<br>'.'success';
+        // if($quests instanceof Collection){
+        //     return 'true';
+        // }else{
+        //     return 'false';
+        // }
+        // $request->session()->forget('search_result');
+        // return 'delete session search_result success';
+
+        if($request->has('page')){
+            //將所找到的quest的id存到session
+            $search_result = array();
+            for ($i = 0; $i < $quests->count(); $i++) {
+                array_push($search_result, $quests[$i]->id.'');
+            }
+            $request->session()->flash("search_result" , $search_result);
+            // return $request->page;
+            $quests_page = $quests->forPage($request->page,$item_per_page);
+            $quests_page = $quests_page->values();//第二頁以後也需要reindex
+            $object_pagination = new LengthAwarePaginator($quests_page,$quests->count(),$item_per_page,$request->page);
+            // return $quests->count();
+            // return $quests_page->all();
+            // return $request->session()->all();
+        }else{//進入這個else代表剛從輸入搜尋頁面進來controller
+            //將所找到的quest的id存到session
+            $search_result = array();
+            for ($i = 0; $i < $quests->count(); $i++) {
+                array_push($search_result, $quests[$i]->id.'');
+            }
+            $request->session()->flash("search_result" , $search_result);
+            // return $request->session()->all();
+
+            $quests_page = $quests->forPage(1,$item_per_page);
+            // return $quests->count();
+            // return $quests_page->all();
+            $object_pagination = new LengthAwarePaginator($quests_page,$quests->count(),$item_per_page,1);
+            // return $object_pagination->currentPage();
+        }
+        // return $quests->count();
+        $object_pagination->setPath('result');
+        // return implode(" ",$quests->toArray());
+        // return $quests->total();
+        // return $quests->perPage();
+        // $object_pagination = new LengthAwarePaginator();
+        // $quests = $object_pagination->setCollection($quests);
         $mission_require = DB::table('mission_require')->get();  // 從資料庫抓取工讀條件
         $ums = DB::table('um')->where('user_id',Auth::user()->id)->get();  // 從資料庫抓取使用者-工讀資料
 
         return view('search_work_result',[
-            'quests'=>$quests,
+            'quests'=>$object_pagination,
             'ums'=>$ums,
             'mission_require'=>$mission_require]);
         
-        foreach ($quests as $quest) {
-            echo '<span style="color:red">name</span> = '.$quest->name."<br>"
-            .'<span>creator</span> = '.$quest->creator."<br>"
-            .'<span style="color:rgb(102, 153, 153)">start_at</span> = '.$quest->start_at."<br>"
-            .'<span style="color:brown">end_at</span> = '.$quest->end_at."<br>"
-            .'<span style="color:green">description</span> = '.$quest->description."<br>"
-            .'<span style="color:orange">point</span> = '.$quest->point."<br>"
-            .'<span style="color:blue">catalog</span> = '.$quest->catalog."<br>"
-            ."<br>";
-        }//顯示搜尋結果
+        // foreach ($quests as $quest) {
+        //     echo '<span style="color:red">name</span> = '.$quest->name."<br>"
+        //     .'<span>creator</span> = '.$quest->creator."<br>"
+        //     .'<span style="color:rgb(102, 153, 153)">start_at</span> = '.$quest->start_at."<br>"
+        //     .'<span style="color:brown">end_at</span> = '.$quest->end_at."<br>"
+        //     .'<span style="color:green">description</span> = '.$quest->description."<br>"
+        //     .'<span style="color:orange">point</span> = '.$quest->point."<br>"
+        //     .'<span style="color:blue">catalog</span> = '.$quest->catalog."<br>"
+        //     ."<br>";
+        // }//顯示搜尋結果
 
-        return 'count = '.$quests->count().'<br>success';
+        // return 'count = '.$quests->count().'<br>success';
         // return redirect('/work/search/result/show',['quests'=>$quests]);
         // return redirect()->action('QuestController@showSearchWorkResult', ['quests' => $quests]);
         // return redirect()->route('showsearchresult',['quests'=>$quests]);

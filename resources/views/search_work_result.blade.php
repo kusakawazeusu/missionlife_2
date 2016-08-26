@@ -115,7 +115,7 @@
         <a class="btn btn-success btn-block" href="{{url('/work/search')}}" role="button">搜尋任務</a>
       </div>
     </div>
-
+{{$quests->links()}}
 			<table class="table table-hover table-bordered">
 				<thead>
 					<tr>
@@ -145,6 +145,7 @@
 
 				</tbody>
 			</table>
+      {{$quests->links()}}
       {{$quests->count()}}
 		</div>
 
