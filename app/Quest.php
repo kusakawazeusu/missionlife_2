@@ -11,7 +11,7 @@ class Quest extends Model
      *
      * @var string
      */
-    protected $table = 'quest';
+    protected $table = 'quests';
 
     public function Um(){
     	return $this->hasMany('App\Um', 'quest_id');

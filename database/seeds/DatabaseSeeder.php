@@ -12,9 +12,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call('UsersTableSeeder');
+        // $this->call('UsersTableSeeder');
         //$this->call('quest_seeder');
-        $this->call('DepartmentsTableSeeder');
+        $this->call('QuestsTableSeeder');
+        $this->call('ActivitiesTableSeeder');
+        $this->call('LecturesTableSeeder');
+        // $this->call('DepartmentsTableSeeder');
         //$this->call('dialog_seeder');
         //DB::table('dialog')->delete();
     }

@@ -106,6 +106,9 @@
                         <a href="{{ url('/newquest') }}">發佈新任務</a>
                     </li>
                     <li>
+                        <a href="{{ url('/select_mission') }}">發佈新任務2</a>
+                    </li>
+                    <li>
                         <a href="{{ url('/questmanage') }}">管理已發佈任務</a>
                     </li>
                     <li>

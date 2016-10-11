@@ -171,6 +171,9 @@ class QuestController extends Controller
     {
         return view('newquest');
     }
+    public function select_mission(){
+        return view('select_mission');
+    }
     public function showQuestlobby()
     {
         return view('quest');
