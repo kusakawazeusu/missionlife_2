@@ -38,6 +38,7 @@ Route::get('/newdia','mission@create');
 // NPC增加新任務
 Route::get('/newquest','QuestController@showNewquest');
 Route::get('/select_mission','QuestController@select_mission');
+Route::get('/newquest_2','QuestController@showNewquest_2');
 Route::post('/newquest','QuestController@store');
 
 // NPC管理任務

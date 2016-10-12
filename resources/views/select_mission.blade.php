@@ -28,7 +28,7 @@
                                                 <div class = "col-md-12">
                                                       <h3 class="text-center">發佈工讀任務</h3><br>
                                                       <p>然後這邊放著一堆介紹</p>
-                                                      <a href="{{ url('/work') }}" style="position: relative;top: 240px;" class="btn btn-primary">進入</a>
+                                                      <a href="{{ url('/newquest_2') }}" style="position: relative;top: 240px;" class="btn btn-primary">進入</a>
                                                 </div>
                                           </div>
                                     </div>
