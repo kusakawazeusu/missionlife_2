@@ -45,7 +45,25 @@
                               $("#insert_point"+num+" div[name='input_area']").fadeIn("fast");
                         }
                   });
+                  // alert({{old('salary_type')}});
+                  if({{old('salary_type')}}!=null){
+                    // $errors->has('salary_type')
+                    // old('salary_type');
+                    // alert('da');//確定可以進來
+                    // $("[name=salary_type]").first().parent().css("background-color", "yellow");
+                    // $("label").css({"color": "red", "border": "2px solid red"});
+                    // var $radio_salary_type = $(":radio[name='salary_type'][value=1]");
+                    // alert($radio_salary_type);
+                    // $radio_salary_type.prop('checked',true);
+                    $(":radio[name='salary_type'][value={{old('salary_type')}}]").prop('checked',true);
+                    // $("input[name=salary_type][value=1]").prop("checked", "checked");
+                   // $("input[name=salary_type][value=1]").css("background-color", "yellow");
+                  }
+                  if({{old('verification')}}!=null){
+                    $(":radio[name='verification'][value={{old('verification')}}]").prop('checked',true);
+                  }
             });
+            
             </script>
 
 		<div id="wtf" class="container">
@@ -53,7 +71,7 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<h2 class="text-center">發佈新工讀任務</h2>
-            	                  <form id="pb" class="form-horizontal" role="form" method="POST" action="{{ url('/newquest') }}">
+            	                  <form id="pb" class="form-horizontal" role="form" method="POST" action="{{ url('/newquest_2') }}">
                                     {{csrf_field()}}
             	        	     <!--  <div   class="form-group">
              	                      <label for="catalog" class="col-md-2 col-md-offset-2 control-label">任務分類</label>
@@ -68,7 +86,7 @@
             	            <div class="form-group">
              	               <label for="name" class="col-md-2 col-md-offset-2 control-label">任務標題</label>
              	               <div class="col-md-6">
-             	                   <input id="name" class="form-control" name="name">
+             	                   <input id="name" class="form-control" name="name" value="{{old('name')}}">
                                      @if ($errors->has('name'))
                                           <span class="help-block">
                                           <strong>{{ $errors->first('name') }}</strong>
@@ -79,7 +97,7 @@
             	            <div class="form-group">
              	               	<label for="apply_start_at" class="col-md-2 col-md-offset-2 control-label">報名開始日期</label>
              	               	<div class="col-md-6">
-             	               		<input data-provide="datepicker" data-date-format="yyyy/mm/dd" data-date-autoclose="true" id="apply_start_at" class="form-control" name="apply_start_at">
+             	               		<input data-provide="datepicker" data-date-format="yyyy/mm/dd" data-date-autoclose="true" id="apply_start_at" class="form-control" name="apply_start_at" value="{{old('apply_start_at')}}">
                                           @if ($errors->has('apply_start_at'))
                                                 <span class="help-block">
                                                 <strong>{{ $errors->first('apply_start_at') }}</strong>
@@ -90,7 +108,7 @@
             	            <div class="form-group">
              	               	<label for="apply_end_at" class="col-md-2 col-md-offset-2 control-label">報名截止日期</label>
              	               	<div class="col-md-6">
-             	               		<input data-provide="datepicker" data-date-format="yyyy/mm/dd" data-date-autoclose="true" id="apply_end_at" class="form-control" name="apply_end_at">
+             	               		<input data-provide="datepicker" data-date-format="yyyy/mm/dd" data-date-autoclose="true" id="apply_end_at" class="form-control" name="apply_end_at" value="{{old('apply_end_at')}}">
                                           @if ($errors->has('apply_end_at'))
                                           <span class="help-block">
                                           <strong>{{ $errors->first('apply_end_at') }}</strong>
@@ -101,7 +119,7 @@
                               <div class="form-group">
                                     <label for="execute_start_at" class="col-md-2 col-md-offset-2 control-label">工讀開始日期</label>
                                     <div class="col-md-6">
-                                          <input data-provide="datepicker" data-date-format="yyyy/mm/dd" data-date-autoclose="true" id="execute_start_at" class="form-control" name="execute_start_at">
+                                          <input data-provide="datepicker" data-date-format="yyyy/mm/dd" data-date-autoclose="true" id="execute_start_at" class="form-control" name="execute_start_at" value="{{old('execute_start_at')}}">
                                           @if ($errors->has('execute_start_at'))
                                           <span class="help-block">
                                           <strong>{{ $errors->first('execute_start_at') }}</strong>
@@ -112,7 +130,7 @@
                               <div class="form-group">
                                     <label for="execute_end_at" class="col-md-2 col-md-offset-2 control-label">工讀結束日期</label>
                                     <div class="col-md-6">
-                                          <input data-provide="datepicker" data-date-format="yyyy/mm/dd" data-date-autoclose="true" id="execute_end_at" class="form-control" name="execute_end_at">
+                                          <input data-provide="datepicker" data-date-format="yyyy/mm/dd" data-date-autoclose="true" id="execute_end_at" class="form-control" name="execute_end_at" value="{{old('execute_end_at')}}">
                                           @if ($errors->has('execute_end_at'))
                                           <span class="help-block">
                                           <strong>{{ $errors->first('execute_end_at') }}</strong>
@@ -123,7 +141,7 @@
                               <div class="form-group">
                                     <label for="place" class="col-md-2 col-md-offset-2 control-label">工讀地點</label>
                                     <div class="col-md-6">
-                                          <textarea id="place" rows="1" class="form-control" name="place"></textarea>
+                                          <textarea id="place" rows="1" class="form-control" name="place">{{old('place')}}</textarea>
                                           @if ($errors->has('place'))
                                           <span class="help-block">
                                           <strong>{{ $errors->first('place') }}</strong>
@@ -134,18 +152,18 @@
             	            <div class="form-group">
              	               	<label for="description" class="col-md-2 col-md-offset-2 control-label">工讀描述</label>
              	               	<div class="col-md-6">
-             	               		<textarea id="description" rows="5" class="form-control" name="description"></textarea>
-                                          @if ($errors->has('description'))
-                                          <span class="help-block">
-                                          <strong>{{ $errors->first('description') }}</strong>
-                                          </span>
-                                          @endif
+             	               		<textarea id="description" rows="5" class="form-control" name="description">{{old('description')}}</textarea>
+                                  @if ($errors->has('description'))
+                                  <span class="help-block">
+                                  <strong>{{ $errors->first('description') }}</strong>
+                                  </span>
+                                  @endif
              	           		</div>
              	          	</div>
             	            <div class="form-group">
              	               	<label for="salary" class="col-md-2 col-md-offset-2 control-label">給予薪資</label>
-             	               	<div class="col-md-2">
-             	               		<input id="salary" class="form-control" name="salary" placeholder="120">
+             	               	<div class="col-md-3">
+             	               		<input id="salary" type="number" class="form-control" name="salary" placeholder="ex:200" value="{{old('salary')}}">
                                           @if ($errors->has('salary'))
                                           <span class="help-block">
                                           <strong>{{ $errors->first('salary') }}</strong>
@@ -165,8 +183,8 @@
              	          	</div>
                               <div class="form-group">
                                     <label for="point" class="col-md-2 col-md-offset-2 control-label">冒險點數</label>
-                                    <div class="col-md-2">
-                                          <input id="point" class="form-control" name="point">
+                                    <div class="col-md-3">
+                                          <input id="point" type="number" class="form-control" name="point" value="{{old('point')}}">
                                           @if ($errors->has('point'))
                                           <span class="help-block">
                                           <strong>{{ $errors->first('point') }}</strong>
@@ -189,7 +207,7 @@
             	            <div class="form-group">
              	               	<label for="people_require" class="col-md-2 col-md-offset-2 control-label">需要人數</label>
              	               	<div class="col-md-2">
-             	               		<input id="people_require" class="form-control" name="people_require">
+             	               		<input id="people_require" type="number" min="1" class="form-control" name="people_require" value="{{old('people_require')}}">
                                           @if ($errors->has('people_require'))
                                           <span class="help-block">
                                           <strong>{{ $errors->first('people_require') }}</strong>
@@ -201,7 +219,7 @@
                               <div class="form-group">
                                     <label for="max_apply_people" class="col-md-2 col-md-offset-2 control-label">申請人數上限</label>
                                     <div class="col-md-2">
-                                          <input id="max_apply_people" class="form-control" name="max_apply_people">
+                                          <input type="number" min="1" id="max_apply_people" class="form-control" name="max_apply_people" value="{{old('max_apply_people')}}">
                                           @if ($errors->has('max_apply_people'))
                                           <span class="help-block">
                                           <strong>{{ $errors->first('max_apply_people') }}</strong>
@@ -210,6 +228,17 @@
                                     </div>
                                     <label for="max_apply_people" class="control-label">人</label>
                               </div>
+                          <div class="form-group">
+                            <label for="other_description" class="col-md-2 col-md-offset-2 control-label">其它說明</label>
+                            <div class="col-md-6">
+                              <textarea id="other_description" rows="5" class="form-control" name="other_description">{{old('other_description')}}</textarea>
+                                @if ($errors->has('other_description'))
+                                  <span class="help-block">
+                                    <strong>{{ $errors->first('other_description') }}</strong>
+                                  </span>
+                                @endif
+                            </div>
+                          </div>
                               
             	            <div id="insert_point0" class="form-group">
              	               	<label for="requirement" class="col-md-2 col-md-offset-2 control-label"><a id="new"><span class="glyphicon glyphicon-plus"></span></a> 任務條件</label>

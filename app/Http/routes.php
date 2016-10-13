@@ -40,6 +40,7 @@ Route::get('/newquest','QuestController@showNewquest');
 Route::get('/select_mission','QuestController@select_mission');
 Route::get('/newquest_2','QuestController@showNewquest_2');
 Route::post('/newquest','QuestController@store');
+Route::post('/newquest_2','QuestController@store_2');
 
 // NPC管理任務
 Route::get('/questmanage','QuestController@showQuestmanage');

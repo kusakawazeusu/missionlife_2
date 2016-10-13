@@ -301,6 +301,56 @@ class QuestController extends Controller
 
     	return redirect('/');
     }
+
+    public function store_2(Request $request)
+    {
+        
+        $messages = [
+            'required' => '這個欄位是必填的！',
+            'integer' => '必須是整數！',
+            'min' => '須大於:min！',
+            'after_equal'=>'必須在報名開始日期(含)之後！',
+        ];
+
+        $this->validate($request,[
+            'name'=>'required',
+            'apply_start_at'=>'required',
+            'apply_end_at'=>'required|after_equal:apply_start_at',
+            'execute_start_at'=>'required|after_equal:apply_start_at',
+            'execute_end_at'=>'required|after_equal:execute_start_at',
+            'place'=>'required',
+            'description'=>'required',
+            'salary'=>'required|integer',
+            'point'=>'required|integer|min:1',
+            'people_require'=>'required|integer|min:1',
+            'max_apply_people'=>'required|integer|min:1',
+            ],$messages);
+        
+        $quest = new Quest;
+        $quest->name = $request->name;
+        $quest->creator = Auth::user()->name;
+        $quest->apply_start_at = $request->apply_start_at;
+        $quest->apply_end_at = $request->apply_end_at;
+        $quest->execute_start_at = $request->execute_start_at;
+        $quest->execute_end_at = $request->execute_end_at;
+        $quest->place = $request->place;
+        $quest->description = $request->description;
+        $quest->salary = $request->salary;
+        $quest->salary_type = $request->salary_type;
+        $quest->point = $request->point;
+        $quest->verification = $request->verification;
+        $quest->people_require = $request->people_require;
+        $quest->max_apply_people = $request->max_apply_people;
+        $quest->now_apply_people = 0;
+        $quest->actual_accepted_people = 0;
+        $quest->actual_completed_people = 0;
+        $quest->other_description = $request->other_description;
+        $quest->status = 0;
+        $quest->save();
+        
+        return redirect('/');
+    }
+
     public function showSearchWork(){
         return view('search_work');
     }
