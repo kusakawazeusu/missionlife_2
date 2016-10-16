@@ -43,7 +43,7 @@
                                                 <div class="col-md-12">
                                                       <h3 class="text-center">活動任務</h3><br>
                                                       <p>然後這邊放著一堆介紹</p>
-                                                      <a href="{{ url('/activity') }}" style="position: relative;top: 240px;" class="btn btn-primary">進入</a>
+                                                      <a href="{{ url('/newactivity') }}" style="position: relative;top: 240px;" class="btn btn-primary">進入</a>
                                                 </div>
                                           </div>
                                     </div>
@@ -58,7 +58,7 @@
                                                 <div class="col-md-12">
                                                       <h3 class="text-center">講座任務</h3><br>
                                                       <p>然後這邊放著一堆介紹</p>
-                                                      <a href="{{ url('/conf') }}" style="position: relative;top: 240px;" class="btn btn-primary">進入</a>
+                                                      <a href="{{ url('/newlecture') }}" style="position: relative;top: 240px;" class="btn btn-primary">進入</a>
                                                 </div>
                                           </div>
                                     </div>

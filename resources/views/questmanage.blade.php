@@ -9,7 +9,6 @@
 	@if(!Auth::Guest() && Auth::user()->auth=='1')
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
             <script>
-
             $(document).ready(function(){
 
                   $('.day').click(function(){
@@ -20,10 +19,9 @@
                   $('.day').trigger( "click" );
             });
             </script>
-
             <div class="col-md-2 col-md-offset-1">
                   <ul class="nav nav-pills nav-stacked">
-                        <li class="active"><a data-toggle="tab" href="#before">尚未開始招募的任務</a></li>
+                        <li class="active"><a data-toggle="tab" href="#before">報名尚未開始的任務</a></li>
                         <li @if(count($quests_now)==0) class="disabled" @endif><a data-toggle="tab" href="#now">招募中的任務</a></li>
                         <!--<li @if(count($quests_now)==0) class="disabled" @endif><a data-toggle="tab" href="#">進行中的任務</a></li>-->
                         <li @if(count($quests_finished)==0) class="disabled" @endif><a data-toggle="tab" href="#finished">已完成的任務</a></li>
