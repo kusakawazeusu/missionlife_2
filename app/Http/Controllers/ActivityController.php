@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Activity;
 use App\Http\Requests;
 use Auth;
+use DB;
+use QrCode;
 
 class ActivityController extends Controller
 {
@@ -60,8 +62,17 @@ class ActivityController extends Controller
         $activity->actual_completed_people = 0;
         $activity->other_description = $request->other_description;
         $activity->status = 0;
+        $activity->token = rand(0,30000);
         $activity->save();
-        
+
+        $id = DB::table('activities')->max('id');
+        $token = DB::table('activities')->where('id',$id)->value('token');
+        if(!file_exists(public_path('checkactivity_img')))
+            mkdir(public_path('checkactivity_img'));
+        $fileName = public_path('checkactivity_img').'/'.$id.'.png';
+        $url = url('/checkactivity/'.$id.'/'.$token);
+        QrCode::format('png')->size(200)->generate($url, $fileName);
+
         return redirect('/');
     }
 }

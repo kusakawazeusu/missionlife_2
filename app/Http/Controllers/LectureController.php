@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Lecture;
 use App\Http\Requests;
 use Auth;
+use DB;
+use QrCode;
 
 class LectureController extends Controller
 {
@@ -65,6 +67,14 @@ class LectureController extends Controller
         $lecture->status = 0;
         $lecture->save();
         
+        $id = DB::table('lectures')->max('id');
+        $token = DB::table('lectures')->where('id',$id)->value('token');
+        if(!file_exists(public_path('checklecture_img')))
+            mkdir(public_path('checklecture_img'));
+        $fileName = public_path('checklecture_img').'/'.$id.'.png';
+        $url = url('/checklecture/'.$id.'/'.$token);
+        QrCode::format('png')->size(200)->generate($url, $fileName);
+
         return redirect('/');
     }
 }

@@ -2,6 +2,8 @@
 /node_modules
 /public/storage
 /public/personal_img
+/public/checkactivity_img
+/public/checklecture_img
 Homestead.yaml
 Homestead.json
 .env
